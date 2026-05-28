@@ -11,8 +11,8 @@ public class GestionUsuario
         // base de datos para poder ver los usuarios.
         listasdeusaurios = new List<Usuario>
         {
-            new Usuario {nombre = "Alain" , email = "prueba",contrasena = "prueba"},
-            new Usuario{ nombre = "Christian" , email = "prueba2" , contrasena = "prueba2"}
+            new Usuario {Id = 1 ,nombre = "Alain" , email ="prueba",contrasena ="prueba123"},
+            new Usuario{ Id = 2,nombre = "Christian" , email ="prueba2" , contrasena ="prueba123"}
         };
     }
     
