@@ -4,8 +4,11 @@ var builder = WebApplication.CreateBuilder(args);
 
 builder.Services.AddControllers();
 // Learn more about configuring OpenAPI at https://aka.ms/aspnet/openapi
-builder.Services.AddEndpointsApiExplorer();
-builder.Services.AddSwaggerGen(); // <--- ESTA LÍNEA ES CLAVE
+builder.Services.AddOpenApi();
+
+// swagger
+
+builder.Services.AddSwaggerGen();
 
 //CORS
 builder.Services.AddCors(options =>
@@ -26,14 +29,15 @@ var app = builder.Build();
 if (app.Environment.IsDevelopment())
 {
     app.MapOpenApi();
-    app.UseSwagger(); // <--- Habilita la generación del JSON
-    app.UseSwaggerUI(); // <--- Habilita la interfaz visual (la página web)
 }
 
 //CORS
 app.UseCors("AllowAngular");
 
 app.UseAuthorization();
+
+app.UseSwagger();
+app.UseSwaggerUI();
 
 app.MapControllers();
 
