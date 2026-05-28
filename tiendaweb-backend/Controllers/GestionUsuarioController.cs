@@ -34,9 +34,17 @@ public class GestionUsuarioController :  ControllerBase
     }
 
     [HttpGet]
-    public Usuario? ObtenerUsuario(string email , string password)
+    public IResult ObtenerUsuario(string email , string password)
     {
-        return _gestionuser.encontrarUsuario(email, password);
+        Usuario nuevo = new Usuario{email = email , contrasena = password};
+
+
+        if (!_gestionuser.encontrarUsuario(nuevo))
+        {
+            return Results.NotFound();
+        }
+        
+        return Results.Ok(nuevo);
     }
         
     

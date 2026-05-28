@@ -6,6 +6,10 @@ builder.Services.AddControllers();
 // Learn more about configuring OpenAPI at https://aka.ms/aspnet/openapi
 builder.Services.AddOpenApi();
 
+// swagger
+
+builder.Services.AddSwaggerGen();
+
 //CORS
 builder.Services.AddCors(options =>
 {
@@ -31,6 +35,9 @@ if (app.Environment.IsDevelopment())
 app.UseCors("AllowAngular");
 
 app.UseAuthorization();
+
+app.UseSwagger();
+app.UseSwaggerUI();
 
 app.MapControllers();
 

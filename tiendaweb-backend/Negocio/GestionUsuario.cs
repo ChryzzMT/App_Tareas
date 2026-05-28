@@ -16,18 +16,21 @@ public class GestionUsuario
         };
     }
     
-    public Usuario encontrarUsuario(string email, string contrasena)
+    public bool encontrarUsuario(Usuario entrada)
     {
         Usuario usuario = null;
         foreach (var VARIABLE in listasdeusaurios)
         {
-            if (VARIABLE.email.Equals(email) && VARIABLE.contrasena.Equals(contrasena))
+            if (VARIABLE.email.Equals(entrada.email) && VARIABLE.contrasena.Equals(entrada.contrasena))
             {
-                 usuario = VARIABLE;
+                entrada = VARIABLE;
+                
+                return true;
+
             }
         }
 
-        return usuario;
+        return false;
     }
 
     public void CrearUsuario(Usuario usuario)
@@ -47,18 +50,7 @@ public class GestionUsuario
         
     }
 
-    public bool verificardatospersonales(string email, string contrasena)
-    {
-        foreach (var VARIABLE in listasdeusaurios)
-        {
-            if (VARIABLE.email.Equals(email) && VARIABLE.contrasena.Equals(contrasena))
-            {
-                return true;
-            }
-        }
-        
-        return false;
-    }
+    
     
     
     
