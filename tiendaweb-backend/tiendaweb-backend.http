@@ -3,4 +3,7 @@
 GET {{tiendaweb_backend_HostAddress}}/weatherforecast/
 Accept: application/json
 
+// No muestra los endpoint de gestion de usuario
+
+
 ###
