@@ -4,51 +4,83 @@ namespace tiendaweb_backend.Negocio;
 
 public class GestionUsuario
 {
-    public List<Usuario> listasdeusaurios;
+    public List<Usuario> listasdeusuarios;  // ✅ Corregido typo
 
     public GestionUsuario()
     {
-        // base de datos para poder ver los usuarios.
-        listasdeusaurios = new List<Usuario>
+        listasdeusuarios = new List<Usuario>
         {
-            new Usuario {Id = 1 ,nombre = "Alain" , email ="prueba",contrasena ="prueba123"},
-            new Usuario{ Id = 2,nombre = "Christian" , email ="prueba2" , contrasena ="prueba123"}
+            new Usuario { Id = 1, nombre = "Alain", email = "prueba", contrasena = "prueba123" },
+            new Usuario { Id = 2, nombre = "Christian", email = "prueba2", contrasena = "prueba123" }
         };
     }
     
+    // ✅ Método para validar credenciales
     public bool encontrarUsuario(Usuario entrada)
     {
-        Usuario usuario = null;
-        foreach (var VARIABLE in listasdeusaurios)
+        foreach (var usuario in listasdeusuarios)
         {
-            if (VARIABLE.email.Equals(entrada.email) && VARIABLE.contrasena.Equals(entrada.contrasena))
+            if (usuario.email.Equals(entrada.email) && usuario.contrasena.Equals(entrada.contrasena))
             {
-                entrada = VARIABLE;
-                
                 return true;
-
             }
         }
-
         return false;
     }
 
-    public void CrearUsuario(Usuario usuario)
+    // ✅ Método para obtener usuario por email (útil para CreatedAtAction)
+    public Usuario? ObtenerUsuarioPorEmail(string email)
     {
-        if (usuario == null) return;
-        foreach (var VARIABLE in listasdeusaurios)
+        foreach (var usuario in listasdeusuarios)
         {
-            if (VARIABLE.email.Equals(usuario.email) && VARIABLE.contrasena.Equals(usuario.contrasena))
+            if (usuario.email.Equals(email))
             {
-                return;
+                // Retornar copia sin contraseña
+                return new Usuario 
+                { 
+                    Id = usuario.Id, 
+                    nombre = usuario.nombre, 
+                    email = usuario.email 
+                };
+            }
+        }
+        return null;
+    }
+
+    // ✅ Método para obtener usuario completo (solo para validación interna)
+    public Usuario? ObtenerUsuarioCompleto(string email, string contrasena)
+    {
+        foreach (var usuario in listasdeusuarios)
+        {
+            if (usuario.email.Equals(email) && usuario.contrasena.Equals(contrasena))
+            {
+                return usuario;
+            }
+        }
+        return null;
+    }
+    
+    // ✅ Versión corregida de CrearUsuario
+    public bool CrearUsuario(Usuario usuario)
+    {
+        if (usuario == null) return false;
+        
+        // ✅ Verificar si el email YA EXISTE (sin importar contraseña)
+        foreach (var existingUser in listasdeusuarios)
+        {
+            if (existingUser.email.Equals(usuario.email))
+            {
+                return false;  // Email duplicado
             }
         }
 
-        usuario.Id = listasdeusaurios.Count + 1;
+        // Asignar nuevo ID
+        usuario.Id = listasdeusuarios.Count + 1;
+        listasdeusuarios.Add(usuario);
         
-        listasdeusaurios.Add(usuario);
-        
+        return true;  // Creación exitosa
     }
+}
 
     
     
