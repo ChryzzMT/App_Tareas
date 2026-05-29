@@ -8,11 +8,12 @@ namespace tiendaweb_backend.Controllers;
 [Route("api/[controller]")]
 public class GestionUsuarioController : ControllerBase
 {
-    private readonly GestionUsuario _gestionuser;
+    private readonly IGestionUsuario _gestionuser;
 
-    public GestionUsuarioController()
+    
+    public GestionUsuarioController(IGestionUsuario gestionuser)
     {
-        _gestionuser = new GestionUsuario();
+        _gestionuser = gestionuser;
     }
 
     [HttpGet("ListaDeUsuarios")]
@@ -20,7 +21,7 @@ public class GestionUsuarioController : ControllerBase
     {
         try
         {
-            var usuarios = _gestionuser.listasdeusaurios.Select(u => new Usuario
+            var usuarios = _gestionuser.listasdeusuarios.Select(u => new Usuario
             {
                 Id = u.Id,
                 nombre = u.nombre,
@@ -31,6 +32,7 @@ public class GestionUsuarioController : ControllerBase
         }
         catch (Exception ex)
         {
+            
             return StatusCode(500, "Error al obtener la lista de usuarios");
         }
     }
@@ -50,8 +52,8 @@ public class GestionUsuarioController : ControllerBase
 
         try
         {
-            _gestionuser.CrearUsuario(usuario);
-            return CreatedAtAction(nameof(ObtenerUsuario), new { email = usuario.email }, usuario);
+            var usuarioCreado = _gestionuser.CrearUsuario(usuario);
+            return CreatedAtAction(nameof(ObtenerUsuario), new { email = usuario.email }, usuarioCreado);
         }
         catch (Exception ex)
         {
@@ -59,24 +61,24 @@ public class GestionUsuarioController : ControllerBase
         }
     }
 
-    [HttpGet("ObtenerUsuario")]
-    public ActionResult<Usuario> ObtenerUsuario([FromQuery] string email, [FromQuery] string password)
+    [HttpPost("ObtenerUsuario")] 
+    public ActionResult<Usuario> ObtenerUsuario([FromBody] LoginRequest login)
     {
-        if (string.IsNullOrEmpty(email) || string.IsNullOrEmpty(password))
+        if (string.IsNullOrEmpty(login.Email) || string.IsNullOrEmpty(login.Password))
         {
             return BadRequest("Email y contraseña son requeridos");
         }
 
         try
         {
-            var usuario = new Usuario { email = email, contrasena = password };
-
-            if (!_gestionuser.encontrarUsuario(usuario))
+            var usuario = _gestionuser.ObtenerUsuarioPorCredenciales(login.Email, login.Password);
+            
+            if (usuario == null)
             {
                 return NotFound("Usuario no encontrado");
             }
             
-            // Don't return the password in the response
+            
             usuario.contrasena = null;
             return Ok(usuario);
         }
@@ -85,4 +87,11 @@ public class GestionUsuarioController : ControllerBase
             return StatusCode(500, "Error al obtener el usuario");
         }
     }
+}
+
+
+public class LoginRequest
+{
+    public string Email { get; set; }
+    public string Password { get; set; }
 }
