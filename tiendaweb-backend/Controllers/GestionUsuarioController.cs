@@ -8,12 +8,11 @@ namespace tiendaweb_backend.Controllers;
 [Route("api/[controller]")]
 public class GestionUsuarioController : ControllerBase
 {
-    private readonly IGestionUsuario _gestionuser;
+    private readonly GestionUsuario _gestionuser;
 
-    
-    public GestionUsuarioController(IGestionUsuario gestionuser)
+    public GestionUsuarioController()
     {
-        _gestionuser = gestionuser;
+        _gestionuser = new GestionUsuario();
     }
 
     [HttpGet("ListaDeUsuarios")]
@@ -21,19 +20,20 @@ public class GestionUsuarioController : ControllerBase
     {
         try
         {
+            // ✅ Corregido: listasdeusuarios (no listasdeusaurios)
             var usuarios = _gestionuser.listasdeusuarios.Select(u => new Usuario
             {
                 Id = u.Id,
                 nombre = u.nombre,
                 email = u.email
+                // No incluir contraseña
             });
             
             return Ok(usuarios);
         }
         catch (Exception ex)
         {
-            
-            return StatusCode(500, "Error al obtener la lista de usuarios");
+            return StatusCode(500, $"Error al obtener la lista de usuarios: {ex.Message}");
         }
     }
 
@@ -52,17 +52,58 @@ public class GestionUsuarioController : ControllerBase
 
         try
         {
-            var usuarioCreado = _gestionuser.CrearUsuario(usuario);
-            return CreatedAtAction(nameof(ObtenerUsuario), new { email = usuario.email }, usuarioCreado);
+            bool creado = _gestionuser.CrearUsuario(usuario);
+            
+            if (!creado)
+            {
+                return Conflict("El email ya está registrado");  // HTTP 409 Conflict
+            }
+            
+            // ✅ AHORA SÍ funciona correctamente
+            return CreatedAtAction(nameof(ObtenerUsuarioPorEmail), 
+                                  new { email = usuario.email }, 
+                                  new Usuario 
+                                  { 
+                                      Id = usuario.Id, 
+                                      nombre = usuario.nombre, 
+                                      email = usuario.email 
+                                  });
         }
         catch (Exception ex)
         {
-            return StatusCode(500, "Error al crear el usuario");
+            return StatusCode(500, $"Error al crear el usuario: {ex.Message}");
         }
     }
 
-    [HttpPost("ObtenerUsuario")] 
-    public ActionResult<Usuario> ObtenerUsuario([FromBody] LoginRequest login)
+    // ✅ Nuevo método GET para obtener por email (sin password)
+    [HttpGet("PorEmail/{email}")]
+    public ActionResult<Usuario> ObtenerUsuarioPorEmail(string email)
+    {
+        if (string.IsNullOrEmpty(email))
+        {
+            return BadRequest("Email es requerido");
+        }
+
+        try
+        {
+            var usuario = _gestionuser.ObtenerUsuarioPorEmail(email);
+            
+            if (usuario == null)
+            {
+                return NotFound("Usuario no encontrado");
+            }
+            
+            return Ok(usuario);
+        }
+        catch (Exception ex)
+        {
+            return StatusCode(500, $"Error al obtener el usuario: {ex.Message}");
+        }
+    }
+
+    // Mantienes tu método original de login
+    [HttpPost("Login")]
+    public ActionResult<Usuario> Login([FromBody] LoginRequest login)
     {
         if (string.IsNullOrEmpty(login.Email) || string.IsNullOrEmpty(login.Password))
         {
@@ -71,24 +112,23 @@ public class GestionUsuarioController : ControllerBase
 
         try
         {
-            var usuario = _gestionuser.ObtenerUsuarioPorCredenciales(login.Email, login.Password);
+            var usuario = _gestionuser.ObtenerUsuarioCompleto(login.Email, login.Password);
             
             if (usuario == null)
             {
-                return NotFound("Usuario no encontrado");
+                return Unauthorized("Credenciales inválidas");  // HTTP 401
             }
             
-            
+            // No devolver la contraseña
             usuario.contrasena = null;
             return Ok(usuario);
         }
         catch (Exception ex)
         {
-            return StatusCode(500, "Error al obtener el usuario");
+            return StatusCode(500, $"Error en el login: {ex.Message}");
         }
     }
 }
-
 
 public class LoginRequest
 {
