@@ -4,89 +4,59 @@ namespace tiendaweb_backend.Negocio;
 
 public class GestionUsuario
 {
-    public List<Usuario> listasdeusuarios { get; }  
-
-    public GestionUsuario()
+    public static List<Usuario> Listasdeusuarios { get; set; } = new List<Usuario>()
     {
-        listasdeusuarios = new List<Usuario>
-        {
-            new Usuario { Id = 1, nombre = "Alain", email = "prueba", contrasena = "prueba123" },
-            new Usuario { Id = 2, nombre = "Christian", email = "prueba2", contrasena = "prueba123" }
-        };
-    }
+        new() { Id = 1, nombre = "Alain", email = "prueba", contrasena = "prueba123" },
+        new() { Id = 2, nombre = "Christian", email = "prueba2", contrasena = "prueba123" }
+    }; 
+    public int identificador =2;
     
-    public bool encontrarUsuario(Usuario entrada)
+    public void CrearUsuario(Usuario usuario)
     {
-        foreach (var usuario in listasdeusuarios)
-        {
-            if (usuario.email.Equals(entrada.email) && usuario.contrasena.Equals(entrada.contrasena))
-            {
-                return true;
-            }
-        }
-        return false;
-    }
-
-    public Usuario? ObtenerUsuarioPorEmail(string email)
-    {
-        foreach (var usuario in listasdeusuarios)
-        {
-            if (usuario.email.Equals(email))
-            {
-                return new Usuario 
-                { 
-                    Id = usuario.Id, 
-                    nombre = usuario.nombre, 
-                    email = usuario.email 
-                };
-            }
-        }
-        return null;
-    }
-
-    public Usuario? ObtenerUsuarioCompleto(string email, string contrasena)
-    {
-        foreach (var usuario in listasdeusuarios)
-        {
-            if (usuario.email.Equals(email) && usuario.contrasena.Equals(contrasena))
-            {
-                return usuario;
-            }
-        }
-        return null;
-    }
-    
-    public bool CrearUsuario(Usuario usuario)
-    {
-        if (usuario == null) return false;
+        if (usuario == null) return ;
         
-        foreach (var existingUser in listasdeusuarios)
+        foreach (var existingUser in Listasdeusuarios)
         {
             if (existingUser.email.Equals(usuario.email))
             {
-                return false;  
+                return ;  
             }
         }
 
-        usuario.Id = listasdeusuarios.Count + 1;
-        listasdeusuarios.Add(usuario);
+        ++identificador;
+        usuario.Id = identificador;
+        Listasdeusuarios.Add(usuario);
         
-        return true;  
+        return ;  
     }
 
-    public void EliminarUsuario(Usuario usuario)
+    public void EliminarUsuario(int d)
     {
-        if(usuario == null) return;
-        if(!encontrarUsuario(usuario)) return;
-        int index = listasdeusuarios.FindIndex(x => x.Id.Equals(usuario.Id));
-        listasdeusuarios.RemoveAt(index);
+      
+        for (int i = 0; i < Listasdeusuarios.Count; i++)
+        {
+            if (Listasdeusuarios[i].Id == d)
+            {
+                Listasdeusuarios.RemoveAt(i);
+                return;
+            }
+        }
+
+       
     }
 
     public void ModificarUsuario(Usuario usuario)
     {
         if (usuario == null) return;
-        int index = listasdeusuarios.FindIndex(x => x.Id.Equals(usuario.Id));
-        listasdeusuarios[index] = usuario;
+        int index = Listasdeusuarios.FindIndex(x => x.Id.Equals(usuario.Id));
+        Listasdeusuarios[index] = new Usuario
+        {
+            Id = Listasdeusuarios[index].Id,
+            nombre= usuario.nombre,
+            email = usuario.email,
+            contrasena = usuario.contrasena
+        };
+        
     }
 }
 

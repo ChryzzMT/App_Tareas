@@ -18,15 +18,14 @@ public class GestionUsuarioController : Controller
     [HttpGet("ListaDeUsuarios")]
     public IEnumerable<Usuario> ListarUsuario()
     {
-        return _gestionuser.listasdeusuarios;
+        return GestionUsuario.Listasdeusuarios;
     }
 
     [HttpDelete("EliminarUsuario")]
-    public string EliminarUsuario( [FromBody] Usuario usuario)
+    public void EliminarUsuario(  int id)
     {
-        if(!_gestionuser.encontrarUsuario(usuario))  return "Usuario no encontrado";
-        _gestionuser.EliminarUsuario(usuario);
-        return $"Usuario: {usuario.nombre}  eliminado correctamente";
+        _gestionuser.EliminarUsuario(id);
+        
     }
 
     [HttpPost("CrearUsuario")]
