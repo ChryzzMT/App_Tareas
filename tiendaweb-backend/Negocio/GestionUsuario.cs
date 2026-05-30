@@ -78,6 +78,13 @@ public class GestionUsuario
     {
         listasdeusuarios.Remove(usuario);
     }
+
+    public void ModificarUsuario(Usuario usuario)
+    {
+        if (usuario == null) return;
+        int index = listasdeusuarios.FindIndex(x => x.Id.Equals(usuario.Id));
+        listasdeusuarios[index] = usuario;
+    }
 }
 
     

@@ -22,17 +22,24 @@ public class GestionUsuarioController : Controller
     }
 
     [HttpDelete("EliminarUsuario")]
-    public IActionResult EliminarUsuario( [FromBody] Usuario usuario)
+    public string EliminarUsuario( [FromBody] Usuario usuario)
     {
         _gestionuser.EliminarUsuario(usuario);
-        return Ok("Usuario eliminado correctamente");
+        return $"Usuario: {usuario.nombre}  eliminado correctamente";
     }
 
     [HttpPost("CrearUsuario")]
-    public IActionResult CrearUsuario([FromBody] Usuario usuario)
+    public string CrearUsuario([FromBody] Usuario usuario)
     {
         _gestionuser.CrearUsuario(usuario);
-        return Ok("Usuario creado correctamente");
+        return $"Usuario creado correctamente el usuario {usuario.nombre}";
     }
-    
+
+    [HttpPut("EditarUsuario")]
+    public string EditarUsuario([FromBody] Usuario usuario)
+    {
+         _gestionuser.ModificarUsuario(usuario);
+         
+         return  $"Usuario: {usuario.nombre}  editado correctamente";
+    }
 }
