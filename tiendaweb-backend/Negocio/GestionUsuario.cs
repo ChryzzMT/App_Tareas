@@ -33,7 +33,6 @@ public class GestionUsuario
         {
             if (usuario.email.Equals(email))
             {
-                // Retornar copia sin contraseña
                 return new Usuario 
                 { 
                     Id = usuario.Id, 
