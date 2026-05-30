@@ -10,6 +10,11 @@ public class GestionTareasController:Controller
 {
     private GestionTareas gestionTareas;
 
+    public GestionTareasController()
+    {
+        gestionTareas = new GestionTareas();
+    }
+
     [HttpGet("Listar-Tareas")]
     public IEnumerable<Tarea> ListarTareas()
     {
@@ -23,31 +28,31 @@ public class GestionTareasController:Controller
     }
 
     [HttpPut("Actualizar-Peso")]
-    public void ActualizarPeso([FromBody] string id, int nuevoPeso)
+    public void ActualizarPeso(string id, int nuevoPeso)
     {
         gestionTareas.ActualizarPesoTarea(id, nuevoPeso);
     }
 
     [HttpPut("Actualizar-Titulo")]
-    public void ActualizarTitulo([FromBody] string antT, string nuevoT)
+    public void ActualizarTitulo(string antT, string nuevoT)
     {
         gestionTareas.ActualizarTitulo(antT,nuevoT);
     }
 
     [HttpDelete("Eliminar-Tarea")]
-    public void ActualizarTarea([FromBody] string titulo)
+    public void ActualizarTarea(string titulo)
     {
         gestionTareas.EliminarTarea(titulo);
     }
 
     [HttpPut("Actualizar-descripciondetarea")]
-    public void ActualizarDescripcionTarea([FromBody] string id ,  string descripcion)
+    public void ActualizarDescripcionTarea(string id ,  string descripcion)
     {
         gestionTareas.ActualizarDescripcion(id, descripcion);
     }
 
     [HttpPut("Actualizar-fechadeentrega")]
-    public void ActualizarFechadeentrega([FromBody] string idtarea , string fecha )
+    public void ActualizarFechadeentrega(string idtarea , string fecha )
     {
         gestionTareas.ActualizarFecha(idtarea, fecha);
     }
