@@ -49,9 +49,13 @@ public class GestionUsuario
     {
         if (usuario == null) return;
         int index = Listasdeusuarios.FindIndex(x => x.Id.Equals(usuario.Id));
-        Listasdeusuarios[index].nombre = usuario.nombre;
-        Listasdeusuarios[index].email = usuario.email;
-        Listasdeusuarios[index].contrasena = usuario.contrasena;
+        Listasdeusuarios[index] = new Usuario
+        {
+            Id = Listasdeusuarios[index].Id,
+            nombre= usuario.nombre,
+            email = usuario.email,
+            contrasena = usuario.contrasena
+        };
         
     }
 }

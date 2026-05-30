@@ -8,7 +8,7 @@ namespace tiendaweb_backend.Controllers;
 [Route("[controller]")]
 public class GestionUsuarioController : Controller
 {
-    private GestionUsuario _gestionuser;
+    private readonly GestionUsuario _gestionuser;
 
     public GestionUsuarioController()
     {
@@ -22,10 +22,9 @@ public class GestionUsuarioController : Controller
     }
 
     [HttpDelete("EliminarUsuario")]
-    public void EliminarUsuario(  int id)
+    public void EliminarUsuario( [FromBody] int id)
     {
         _gestionuser.EliminarUsuario(id);
-        
     }
 
     [HttpPost("CrearUsuario")]
