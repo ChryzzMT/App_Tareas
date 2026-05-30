@@ -22,23 +22,34 @@ public class GestionTareasController:Controller
         gestionTareas.AgregarTarea(tarea);
     }
 
-    [HttpPost("Actualizar-Peso")]
+    [HttpPut("Actualizar-Peso")]
     public void ActualizarPeso([FromBody] string id, int nuevoPeso)
     {
         gestionTareas.ActualizarPesoTarea(id, nuevoPeso);
     }
 
-    [HttpPost("Actualizar-Titulo")]
+    [HttpPut("Actualizar-Titulo")]
     public void ActualizarTitulo([FromBody] string antT, string nuevoT)
     {
         gestionTareas.ActualizarTitulo(antT,nuevoT);
     }
 
-    [HttpPost("Eliminar-Tarea")]
+    [HttpDelete("Eliminar-Tarea")]
     public void ActualizarTarea([FromBody] string titulo)
     {
         gestionTareas.EliminarTarea(titulo);
     }
-    
+
+    [HttpPut("Actualizar-descripciondetarea")]
+    public void ActualizarDescripcionTarea([FromBody] string id ,  string descripcion)
+    {
+        gestionTareas.ActualizarDescripcion(id, descripcion);
+    }
+
+    [HttpPut("Actualizar-fechadeentrega")]
+    public void ActualizarFechadeentrega([FromBody] string idtarea , string fecha )
+    {
+        gestionTareas.ActualizarFecha(idtarea, fecha);
+    }
 
 }
