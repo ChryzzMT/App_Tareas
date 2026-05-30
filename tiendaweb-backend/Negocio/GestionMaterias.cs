@@ -15,7 +15,18 @@ public class GestionMaterias
         Materias.Add(mat);
     }
 
-    public void EliminarMaterias(List<string> nombres )
+    public void ActualizarPesoMateria(Materia mat)
+    {
+        foreach (var m in Materias)
+        {
+            if (m.NombreMateria == mat.NombreMateria)
+            {
+                m.PesoMateria = mat.PesoMateria;
+            }
+        }
+    }
+
+    public void EliminarMaterias(List<string> nombres)
     {
         for (int i = 0; i < nombres.Count; i++)
         {
@@ -28,7 +39,4 @@ public class GestionMaterias
             }
         }
     }
-
-   
-
 }
