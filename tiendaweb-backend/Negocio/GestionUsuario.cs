@@ -76,7 +76,10 @@ public class GestionUsuario
 
     public void EliminarUsuario(Usuario usuario)
     {
-        listasdeusuarios.Remove(usuario);
+        if(usuario == null) return;
+        if(!encontrarUsuario(usuario)) return;
+        int index = listasdeusuarios.FindIndex(x => x.Id.Equals(usuario.Id));
+        listasdeusuarios.RemoveAt(index);
     }
 
     public void ModificarUsuario(Usuario usuario)

@@ -8,7 +8,7 @@ namespace tiendaweb_backend.Controllers;
 [Route("[controller]")]
 public class GestionUsuarioController : Controller
 {
-    private readonly GestionUsuario _gestionuser;
+    private GestionUsuario _gestionuser;
 
     public GestionUsuarioController()
     {
@@ -24,6 +24,7 @@ public class GestionUsuarioController : Controller
     [HttpDelete("EliminarUsuario")]
     public string EliminarUsuario( [FromBody] Usuario usuario)
     {
+        if(!_gestionuser.encontrarUsuario(usuario))  return "Usuario no encontrado";
         _gestionuser.EliminarUsuario(usuario);
         return $"Usuario: {usuario.nombre}  eliminado correctamente";
     }
