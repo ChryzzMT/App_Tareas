@@ -8,9 +8,9 @@ import {Producto} from './producto';
   imports: [
     RouterLink
   ],
-  templateUrl: './productos.html',
+  templateUrl: './producto-lista.html',
 })
-export class Productos {
+export class ProductoLista {
   private api = inject(ApiClient);
   private url = 'http://localhost:5056/GestionProductos'; //si el puerto de dotnet es diferente cambiar aquI
   //SPA UNA SOLA PAGINA
