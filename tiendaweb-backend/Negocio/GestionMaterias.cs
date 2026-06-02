@@ -14,7 +14,7 @@ public class GestionMaterias
     {
         Materias.Add(mat);
     }
-
+    
     public void ActualizarPesoMateria(Materia mat)
     {
         foreach (var m in Materias)

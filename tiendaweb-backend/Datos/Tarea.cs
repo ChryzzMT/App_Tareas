@@ -6,5 +6,5 @@ public class Tarea
     public string? Titulo { get; set; }
     public string? Descripcion { get; set; }
     public int? PesoTarea { get; set; }
-    public string? Fecha { get; set; }
+    public DateTime? FechaDeEntrega { get; set; }
 }
