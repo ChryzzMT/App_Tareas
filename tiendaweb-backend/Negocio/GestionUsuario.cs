@@ -58,6 +58,19 @@ public class GestionUsuario
         };
         
     }
+
+    public Usuario? Login(string email, string password)
+    {
+        foreach (var usuario in Listasdeusuarios)
+        {
+            if (email.ToLower() == usuario.email.ToLower() && 
+                password.ToLower() == usuario.contrasena.ToLower())
+            {
+                return usuario;
+            }
+        }
+        return null;
+    }
 }
 
     

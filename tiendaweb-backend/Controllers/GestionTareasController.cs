@@ -52,9 +52,9 @@ public class GestionTareasController:Controller
     }
 
     [HttpPut("Actualizar-fechadeentrega")]
-    public void ActualizarFechadeentrega(string idtarea , int year,int mes, int dia , int hora, int min )
+    public void ActualizarFechadeentrega(string idtarea , string fecha )
     {
-        gestionTareas.ActualizarFecha(idtarea, year, mes, dia ,hora, min);
+        gestionTareas.ActualizarFecha(idtarea, fecha);
     }
 
 }

@@ -41,4 +41,10 @@ public class GestionUsuarioController : Controller
          
          return  $"Usuario: {usuario.nombre}  editado correctamente";
     }
+
+    [HttpGet("VerificarUsuario")]
+    public Usuario? Log(string m,string c)
+    {
+        return _gestionuser.Login(m,c);
+    }
 }
