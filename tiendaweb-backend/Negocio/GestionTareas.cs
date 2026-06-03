@@ -42,7 +42,7 @@ public class GestionTareas
         }
     }
 
-    public void ActualizarDescripcion(string idTar, string nuevaDescripcion)
+    public void ActualizarDescripcion(int idTar, string nuevaDescripcion)
     {
         var tarea = _db.Tareas.FirstOrDefault(t => t.IdTarea == idTar);
         if (tarea != null)
@@ -52,9 +52,9 @@ public class GestionTareas
         }
     }
 
-    public void ActualizarPesoTarea(string idTar, int nuevoPeso)
+    public void ActualizarPesoTarea(int idTar, int nuevoPeso)
     {
-        var tarea = _db.Tareas.FirstOrDefault(t => t.IdTarea == idTar);
+        var tarea = _db.Tareas.FirstOrDefault(t => t.IdTarea== idTar);
         if (tarea != null)
         {
             tarea.PesoTarea = nuevoPeso;
@@ -62,12 +62,12 @@ public class GestionTareas
         }
     }
 
-    public void ActualizarFecha(string idTar, string nuevaFecha)
+    public void ActualizarFecha(int idTar, string nuevaFecha)
     {
         var tarea = _db.Tareas.FirstOrDefault(t => t.IdTarea == idTar);
         if (tarea != null)
         {
-            tarea.Fecha = DateTime.Parse(nuevaFecha);
+            tarea.FechaEntrega = DateTime.Parse(nuevaFecha);
             _db.SaveChanges();
         }
     }

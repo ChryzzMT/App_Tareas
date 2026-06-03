@@ -28,7 +28,7 @@ public class GestionTareasController : Controller
     }
 
     [HttpPut("Actualizar-Peso")]
-    public void ActualizarPeso(string id, int nuevoPeso)
+    public void ActualizarPeso(int id, int nuevoPeso)
     {
         gestionTareas.ActualizarPesoTarea(id, nuevoPeso);
     }
@@ -46,13 +46,13 @@ public class GestionTareasController : Controller
     }
 
     [HttpPut("Actualizar-descripciondetarea")]
-    public void ActualizarDescripcionTarea(string id, string descripcion)
+    public void ActualizarDescripcionTarea(int id, string descripcion)
     {
         gestionTareas.ActualizarDescripcion(id, descripcion);
     }
 
     [HttpPut("Actualizar-fechadeentrega")]
-    public void ActualizarFechadeentrega(string idtarea, string fecha)
+    public void ActualizarFechadeentrega(int idtarea, string fecha)
     {
         gestionTareas.ActualizarFecha(idtarea, fecha);
     }
