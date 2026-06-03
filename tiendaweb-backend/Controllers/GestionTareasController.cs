@@ -6,25 +6,25 @@ namespace tiendaweb_backend.Controllers;
 
 [ApiController]
 [Route("[controller]")]
-public class GestionTareasController:Controller
+public class GestionTareasController : Controller
 {
     private GestionTareas gestionTareas;
 
-    public GestionTareasController()
+    public GestionTareasController(AppDbContext db)
     {
-        gestionTareas = new GestionTareas();
+        gestionTareas = new GestionTareas(db);
     }
 
     [HttpGet("Listar-Tareas")]
     public IEnumerable<Tarea> ListarTareas()
     {
-        return GestionTareas.Tareas;
+        return gestionTareas.ListarTareas();
     }
 
     [HttpPost("Crear-Tarea")]
-    public void CrearTarea([FromBody] Tarea tarea,int year,int mes, int dia , int hora, int min)
+    public void CrearTarea([FromBody] Tarea tarea)
     {
-        gestionTareas.AgregarTarea(tarea,year, mes, dia, hora, min);
+        gestionTareas.AgregarTarea(tarea);
     }
 
     [HttpPut("Actualizar-Peso")]
@@ -36,25 +36,24 @@ public class GestionTareasController:Controller
     [HttpPut("Actualizar-Titulo")]
     public void ActualizarTitulo(string antT, string nuevoT)
     {
-        gestionTareas.ActualizarTitulo(antT,nuevoT);
+        gestionTareas.ActualizarTitulo(antT, nuevoT);
     }
 
     [HttpDelete("Eliminar-Tarea")]
-    public void ActualizarTarea(string titulo)
+    public void EliminarTarea(string titulo)
     {
         gestionTareas.EliminarTarea(titulo);
     }
 
     [HttpPut("Actualizar-descripciondetarea")]
-    public void ActualizarDescripcionTarea(string id ,  string descripcion)
+    public void ActualizarDescripcionTarea(string id, string descripcion)
     {
         gestionTareas.ActualizarDescripcion(id, descripcion);
     }
 
     [HttpPut("Actualizar-fechadeentrega")]
-    public void ActualizarFechadeentrega(string idtarea , string fecha )
+    public void ActualizarFechadeentrega(string idtarea, string fecha)
     {
         gestionTareas.ActualizarFecha(idtarea, fecha);
     }
-
 }

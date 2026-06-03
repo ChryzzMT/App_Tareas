@@ -1,14 +1,18 @@
+using Microsoft.EntityFrameworkCore;
+using tiendaweb_backend.Datos;
+
 var builder = WebApplication.CreateBuilder(args);
 
 // Add services to the container.
-
 builder.Services.AddControllers();
-// Learn more about configuring OpenAPI at https://aka.ms/aspnet/openapi
 builder.Services.AddOpenApi();
 
 // swagger
-
 builder.Services.AddSwaggerGen();
+
+// DB
+builder.Services.AddDbContext<AppDbContext>(options =>
+    options.UseSqlServer(builder.Configuration.GetConnectionString("DefaultConnection")));
 
 //CORS
 builder.Services.AddCors(options =>
@@ -17,7 +21,7 @@ builder.Services.AddCors(options =>
         policy =>
         {
             policy
-                .WithOrigins("http://localhost:4200") // Cambiar si el puerto es diferente
+                .WithOrigins("http://localhost:4200")
                 .AllowAnyHeader()
                 .AllowAnyMethod();
         });

@@ -4,72 +4,71 @@ namespace tiendaweb_backend.Negocio;
 
 public class GestionTareas
 {
-    public static List<Tarea> Tareas { get; set; }= new List<Tarea>()
+    private readonly AppDbContext _db;
+
+    public GestionTareas(AppDbContext db)
     {
-        new(){IdTarea = "1",Titulo = "Practico #3",Descripcion = "Hacer el practico #3 de calculo 1",Fecha =DateTime.Parse("01-06-2026") , PesoTarea = 5},
-        new(){IdTarea = "2",Titulo = "Ensayo Novela",Descripcion = "Hacer un ensayo sobre mi novela favorita",Fecha = DateTime.Parse("01-06-2026"), PesoTarea = 3},
-        new(){IdTarea = "3",Titulo = "Investigacion antropologia",Descripcion = "Hacer la investigavionde los 13 objetivos",Fecha = DateTime.Parse("01-06-2026"), PesoTarea = 5},
-        new(){IdTarea = "4",Titulo = "Practica de fisica",Descripcion = "Realizar la practica de fisica",Fecha = DateTime.Parse("01-06-2026"), PesoTarea = 8}
-    };
+        _db = db;
+    }
+
+    public List<Tarea> ListarTareas()
+    {
+        return _db.Tareas.ToList();
+    }
 
     public void AgregarTarea(Tarea tarea)
     {
-        Tareas.Add(tarea);
+        _db.Tareas.Add(tarea);
+        _db.SaveChanges();
     }
 
     public void EliminarTarea(string titu)
     {
-        for (int i = 0; i < Tareas.Count;i++)
+        var tarea = _db.Tareas.FirstOrDefault(t => t.Titulo == titu);
+        if (tarea != null)
         {
-            if (Tareas[i].Titulo == titu)
-            {
-                Tareas.RemoveAt(i);
-            }
+            _db.Tareas.Remove(tarea);
+            _db.SaveChanges();
         }
     }
 
     public void ActualizarTitulo(string antiguoTitulo, string nuevoTitulo)
     {
-        for (int i = 0; i < Tareas.Count; i++)
+        var tarea = _db.Tareas.FirstOrDefault(t => t.Titulo == antiguoTitulo);
+        if (tarea != null)
         {
-            if (Tareas[i].Titulo == antiguoTitulo)
-            {
-                Tareas[i].Titulo = nuevoTitulo;
-            }
+            tarea.Titulo = nuevoTitulo;
+            _db.SaveChanges();
         }
     }
 
     public void ActualizarDescripcion(string idTar, string nuevaDescripcion)
     {
-        for (int i = 0; i < Tareas.Count; i++)
+        var tarea = _db.Tareas.FirstOrDefault(t => t.IdTarea == idTar);
+        if (tarea != null)
         {
-            if (Tareas[i].IdTarea == idTar)
-            {
-                Tareas[i].Descripcion = nuevaDescripcion;
-            }
+            tarea.Descripcion = nuevaDescripcion;
+            _db.SaveChanges();
         }
     }
 
     public void ActualizarPesoTarea(string idTar, int nuevoPeso)
     {
-        for (int i = 0; i < Tareas.Count; i++)
+        var tarea = _db.Tareas.FirstOrDefault(t => t.IdTarea == idTar);
+        if (tarea != null)
         {
-            if (Tareas[i].IdTarea == idTar)
-            {
-                Tareas[i].PesoTarea = nuevoPeso;
-            }
+            tarea.PesoTarea = nuevoPeso;
+            _db.SaveChanges();
         }
     }
 
     public void ActualizarFecha(string idTar, string nuevaFecha)
     {
-        for (int i = 0; i < Tareas.Count; i++)
+        var tarea = _db.Tareas.FirstOrDefault(t => t.IdTarea == idTar);
+        if (tarea != null)
         {
-            if (Tareas[i].IdTarea == idTar)
-            {
-                Tareas[i].Fecha = DateTime.Parse(nuevaFecha);
-            }
+            tarea.Fecha = DateTime.Parse(nuevaFecha);
+            _db.SaveChanges();
         }
-        
     }
 }
