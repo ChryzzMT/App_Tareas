@@ -12,11 +12,17 @@ public class GestionTareasController : Controller
 
     public GestionTareasController(AppDbContext db)
     {
-        gestionTareas = new GestionTareas(db);
+        gestionTareas = new GestionTareas(db );
+    }
+
+    [HttpPost("SETUSUARIO")]
+    public void SetUsuario(int usuario)
+    {
+        gestionTareas.SetUsuario(usuario);
     }
 
     [HttpGet("Listar-Tareas")]
-    public IEnumerable<Tarea> ListarTareas()
+    public List<Tarea> ListarTareas()
     {
         return gestionTareas.ListarTareas();
     }
@@ -55,5 +61,17 @@ public class GestionTareasController : Controller
     public void ActualizarFechadeentrega(int idtarea, int year, int mes, int dia, int hora, int minuto)
     {
         gestionTareas.ActualizarFecha(idtarea, year, mes, dia, hora, minuto);
+    }
+
+    [HttpGet("MostrarPorPrioridad")]
+    public IEnumerable<object> MostrarPorPrioridad()
+    {
+        return gestionTareas.MostrarPorPrioridad();
+    }
+
+    [HttpGet("RecomendacionparaEmpezar")]
+    public Tarea Recomendacion()
+    {
+        return gestionTareas.Recomendacion();
     }
 }

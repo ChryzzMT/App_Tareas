@@ -1,3 +1,5 @@
+using Microsoft.AspNetCore.Components.Infrastructure;
+using Microsoft.EntityFrameworkCore;
 using tiendaweb_backend.Datos;
 
 namespace tiendaweb_backend.Negocio;
@@ -5,15 +7,22 @@ namespace tiendaweb_backend.Negocio;
 public class GestionTareas
 {
     private readonly AppDbContext _db;
+    private  static int _idenuser;
 
     public GestionTareas(AppDbContext db)
     {
         _db = db;
+        
+    }
+
+    public void SetUsuario(int usuario)
+    {
+        _idenuser = usuario;
     }
 
     public List<Tarea> ListarTareas()
     {
-        return _db.Tareas.ToList();
+        return _db.Tareas.Where(p  => p.idUsuario == _idenuser).ToList();
     }
 
     public void AgregarTarea(Tarea tarea, int year, int mes, int dia, int hora, int minuto)
@@ -73,4 +82,63 @@ public class GestionTareas
             _db.SaveChanges();
         }
     }
+
+    public List<Tarea> MostrarTareasTerminadas()
+    {
+       var Tareas= _db.Tareas.Where(t =>
+           t.idUsuario == _idenuser && (t.Estado.ToLower() == "completada")).ToList();
+       
+       return Tareas;
+    }
+
+    public List<Tarea> MostrarTareasPasadas()
+    {
+        var tareaspasadas = _db.Tareas.Where(t => t.idUsuario == _idenuser && t.Estado.ToLower() != "completada"
+                                                                           && t.FechaEntrega < DateTime.Now);
+
+        return tareaspasadas.OrderByDescending(t => t.FechaEntrega)
+            .ToList();
+    }
+
+    public List<Object> MostrarPorPrioridad()
+    {
+        var tareasporprioridad = 
+            _db.Tareas.Where(p=>p.idUsuario == _idenuser && 
+                                (p.Estado.ToLower() == "pendiente" ||  p.Estado.ToLower() == "enprogreso") &&  p.FechaEntrega > DateTime.Now )
+            .OrderByDescending( t => t.Materia.PesoMateria).ThenByDescending(m => m.PesoTarea)
+            .ThenBy(k => k.FechaEntrega)
+            .Select(g => new
+        {
+            Id = g.IdTarea,
+            nombre = g.Titulo,
+            descripcion = g.Descripcion,
+            estado = g.Estado,
+            fechadeentrega = g.FechaEntrega,
+            NombreMateria = g.Materia.NombreMateria,
+            PesoTarea = g.PesoTarea,
+            PesoMateria = g.Materia.PesoMateria
+           
+
+
+        });
+
+        return tareasporprioridad.ToList<object>();
+    }
+
+    
+        public Tarea? Recomendacion()
+        {
+
+            var recomendacion = _db.Tareas.Where(p => p.idUsuario == _idenuser &&
+                                                      (p.Estado.ToLower() == "pendiente" ||
+                                                       p.Estado.ToLower() == "enprogreso") && p.FechaEntrega > DateTime.Now)
+                .OrderByDescending(t => t.PesoTarea + t.Materia.PesoMateria)
+                .ThenBy(k => k.FechaEntrega).FirstOrDefault();
+
+            return recomendacion;
+        }
+        
+    
+
+
 }

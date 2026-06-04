@@ -13,8 +13,13 @@ public class Tarea
     public int? PesoTarea { get; set; }
     public DateTime? FechaEntrega { get; set; }
     public string Estado { get; set; } 
-    public int IdMateria { get; set; }
-    public int IDusuario { get; set; }
+    
+    [ForeignKey("Materia")]
+    public int idMateria { get; set; }
+    public Materia? Materia { get; set; }
+    [ForeignKey("Usuario")]
+    public int idUsuario { get; set; }
+    public Usuario? Usuario { get; set; }
     
     
     

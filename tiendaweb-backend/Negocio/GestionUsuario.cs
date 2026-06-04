@@ -33,11 +33,7 @@ public class GestionUsuario
 
     }
 
-    // public void ModificarUsuario(Usuario usuario)
-    // {
-    //     
-    //     
-    // }
+    
 
     public Usuario? Login(string email, string password)
     {
