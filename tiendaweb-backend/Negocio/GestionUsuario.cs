@@ -4,72 +4,49 @@ namespace tiendaweb_backend.Negocio;
 
 public class GestionUsuario
 {
-    public static List<Usuario> Listasdeusuarios { get; set; } = new List<Usuario>()
-    {
-        new() { Id = 1, nombre = "Alain", email = "prueba", contrasena = "prueba123" },
-        new() { Id = 2, nombre = "Christian", email = "prueba2", contrasena = "prueba123" }
-    }; 
-    public int identificador =2;
-    
-    public void CrearUsuario(Usuario usuario)
-    {
-        if (usuario == null) return ;
-        
-        foreach (var existingUser in Listasdeusuarios)
-        {
-            if (existingUser.email.Equals(usuario.email))
-            {
-                return ;  
-            }
-        }
+    public int identificador { get; set; }
+    private readonly AppDbContext _db;
 
-        ++identificador;
-        usuario.Id = identificador;
-        Listasdeusuarios.Add(usuario);
-        
-        return ;  
+    public GestionUsuario(AppDbContext database)
+    {
+        _db = database;
+    }
+
+    public int CrearUsuario(Usuario usuario)
+    {
+        _db.Add(usuario);
+        _db.SaveChanges();
+
+        return usuario.idUsuario;
     }
 
     public void EliminarUsuario(int d)
     {
-      
-        for (int i = 0; i < Listasdeusuarios.Count; i++)
+        var usuario = _db.Usuarios.Find(d);
+
+        if (usuario != null)
         {
-            if (Listasdeusuarios[i].Id == d)
-            {
-                Listasdeusuarios.RemoveAt(i);
-                return;
-            }
+            _db.Usuarios.Remove(usuario);
+            _db.SaveChanges();
         }
 
-       
+
     }
 
-    public void ModificarUsuario(Usuario usuario)
-    {
-        if (usuario == null) return;
-        int index = Listasdeusuarios.FindIndex(x => x.Id.Equals(usuario.Id));
-        Listasdeusuarios[index] = new Usuario
-        {
-            Id = Listasdeusuarios[index].Id,
-            nombre= usuario.nombre,
-            email = usuario.email,
-            contrasena = usuario.contrasena
-        };
-        
-    }
+    // public void ModificarUsuario(Usuario usuario)
+    // {
+    //     
+    //     
+    // }
 
     public Usuario? Login(string email, string password)
     {
-        foreach (var usuario in Listasdeusuarios)
-        {
-            if (email.ToLower() == usuario.email.ToLower() && 
-                password.ToLower() == usuario.contrasena.ToLower())
-            {
-                return usuario;
-            }
-        }
-        return null;
+     var usuariolog = _db.Usuarios.FirstOrDefault(e=> e.Email == email && e.Contrasena == password );
+     if (usuariolog != null)
+     {
+         return usuariolog;
+     }
+     return null;
     }
 }
 

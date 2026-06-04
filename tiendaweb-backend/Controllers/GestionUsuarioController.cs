@@ -1,4 +1,5 @@
 ﻿using Microsoft.AspNetCore.Mvc;
+using Microsoft.EntityFrameworkCore;
 using tiendaweb_backend.Datos;
 using tiendaweb_backend.Negocio;
 
@@ -8,19 +9,13 @@ namespace tiendaweb_backend.Controllers;
 [Route("[controller]")]
 public class GestionUsuarioController : Controller
 {
-    private readonly GestionUsuario _gestionuser;
+    private  GestionUsuario _gestionuser;
 
-    public GestionUsuarioController()
+    public GestionUsuarioController(AppDbContext context)
     {
-        _gestionuser = new GestionUsuario();
+        _gestionuser = new GestionUsuario(context);
     }
-
-    [HttpGet("ListaDeUsuarios")]
-    public IEnumerable<Usuario> ListarUsuario()
-    {
-        return GestionUsuario.Listasdeusuarios;
-    }
-
+    
     [HttpDelete("EliminarUsuario")]
     public void EliminarUsuario( [FromBody] int id)
     {
@@ -28,19 +23,13 @@ public class GestionUsuarioController : Controller
     }
 
     [HttpPost("CrearUsuario")]
-    public string CrearUsuario([FromBody] Usuario usuario)
+    public int CrearUsuario([FromBody] Usuario usuario)
     {
-        _gestionuser.CrearUsuario(usuario);
-        return $"Usuario creado correctamente el usuario {usuario.nombre}";
+       return _gestionuser.CrearUsuario(usuario);
+        
     }
 
-    [HttpPut("EditarUsuario")]
-    public string EditarUsuario([FromBody] Usuario usuario)
-    {
-         _gestionuser.ModificarUsuario(usuario);
-         
-         return  $"Usuario: {usuario.nombre}  editado correctamente";
-    }
+    
 
     [HttpGet("VerificarUsuario")]
     public Usuario? Log(string m,string c)
