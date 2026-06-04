@@ -8,15 +8,15 @@ public class GestionMateriasController:Controller
 {
     private GestionMaterias GestionMaterias;
 
-    public GestionMateriasController()
+    public GestionMateriasController(AppDbContext db)
     {
-        GestionMaterias = new GestionMaterias(); 
+        GestionMaterias = new GestionMaterias(db); 
     }
 
     [HttpGet("lista-materias")]
     public IEnumerable<Materia> ListaMaterias()
     {
-        return GestionMaterias.Materias;
+        return GestionMaterias.ListaMaterias();
     }
 
     [HttpPost("agregar-materia")]

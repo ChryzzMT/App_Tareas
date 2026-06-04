@@ -4,39 +4,47 @@ namespace tiendaweb_backend.Negocio;
 
 public class GestionMaterias
 {
-    public static List<Materia> Materias { get; set; } = new List<Materia> {
-        new() { NombreMateria = "Calculo I", PesoMateria = 4 },
-        new() { NombreMateria = "Escritura Academica", PesoMateria = 5 },
-        new() { NombreMateria = "Intro a Programacion", PesoMateria = 6 },
-        new() { NombreMateria = "Fisica I", PesoMateria = 3 }
-    };
+    private readonly AppDbContext _db;
+    public GestionMaterias(AppDbContext db)
+    {
+        _db = db;
+    }
+
+    public List<Materia> ListaMaterias()
+    {
+        return _db.Materias.ToList();
+    }
     public void AgregarMateria(Materia mat)
     {
-        Materias.Add(mat);
+        _db.Materias.Add(mat);
+        _db.SaveChanges();
     }
     
     public void ActualizarPesoMateria(Materia mat)
     {
-        foreach (var m in Materias)
+        foreach (var m in _db.Materias)
         {
             if (m.NombreMateria == mat.NombreMateria)
             {
                 m.PesoMateria = mat.PesoMateria;
             }
         }
-    }
 
+        _db.SaveChanges();
+    }
+    
     public void EliminarMaterias(List<string> nombres)
     {
         for (int i = 0; i < nombres.Count; i++)
         {
-            for (int j = 0; j < Materias.Count; j++)
+            for (int j = 0; j < _db.Materias.ToList().Count; j++)
             {
-                if (Materias[j].NombreMateria == nombres[i])
+                if (_db.Materias.ToList()[j].NombreMateria == nombres[i])
                 {
-                    Materias.RemoveAt(j);
+                    _db.Materias.ToList().RemoveAt(j);
                 }
             }
         }
+        _db.SaveChanges();
     }
 }
