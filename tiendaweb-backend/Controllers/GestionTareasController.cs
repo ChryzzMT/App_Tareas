@@ -22,9 +22,9 @@ public class GestionTareasController : Controller
     }
 
     [HttpPost("Crear-Tarea")]
-    public void CrearTarea([FromBody] Tarea tarea)
+    public void CrearTarea([FromBody] Tarea tarea,int year, int mes, int dia, int hora, int minuto)
     {
-        gestionTareas.AgregarTarea(tarea);
+        gestionTareas.AgregarTarea(tarea,year, mes, dia, hora, minuto);
     }
 
     [HttpPut("Actualizar-Peso")]
@@ -52,8 +52,8 @@ public class GestionTareasController : Controller
     }
 
     [HttpPut("Actualizar-fechadeentrega")]
-    public void ActualizarFechadeentrega(int idtarea, string fecha)
+    public void ActualizarFechadeentrega(int idtarea, int year, int mes, int dia, int hora, int minuto)
     {
-        gestionTareas.ActualizarFecha(idtarea, fecha);
+        gestionTareas.ActualizarFecha(idtarea, year, mes, dia, hora, minuto);
     }
 }

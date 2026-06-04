@@ -16,8 +16,9 @@ public class GestionTareas
         return _db.Tareas.ToList();
     }
 
-    public void AgregarTarea(Tarea tarea)
+    public void AgregarTarea(Tarea tarea, int year, int mes, int dia, int hora, int minuto)
     {
+        tarea.FechaEntrega = new DateTime(year, mes, dia, hora, minuto, 0);
         _db.Tareas.Add(tarea);
         _db.SaveChanges();
     }
@@ -62,12 +63,13 @@ public class GestionTareas
         }
     }
 
-    public void ActualizarFecha(int idTar, string nuevaFecha)
+    public void ActualizarFecha(int idTar, int year, int mes, int dia, int hora, int minuto)
     {
+        
         var tarea = _db.Tareas.FirstOrDefault(t => t.IdTarea == idTar);
         if (tarea != null)
         {
-            tarea.FechaEntrega = DateTime.Parse(nuevaFecha);
+            tarea.FechaEntrega = new DateTime(year, mes, dia, hora, minuto,0);
             _db.SaveChanges();
         }
     }
