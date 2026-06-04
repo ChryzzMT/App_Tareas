@@ -13,6 +13,12 @@ public class GestionMateriasController:Controller
         GestionMaterias = new GestionMaterias(db); 
     }
 
+    [HttpPut("SetUsuario")]
+    public void SetUsuario(int userid)
+    {
+        GestionMaterias.SetUser(userid);
+    }
+
     [HttpGet("lista-materias")]
     public IEnumerable<Materia> ListaMaterias()
     {

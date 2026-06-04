@@ -5,17 +5,24 @@ namespace tiendaweb_backend.Negocio;
 public class GestionMaterias
 {
     private readonly AppDbContext _db;
+    private static int user;
     public GestionMaterias(AppDbContext db)
     {
         _db = db;
     }
 
+    public void SetUser(int user)
+    {
+        GestionMaterias.user = user;
+    }
+
     public List<Materia> ListaMaterias()
     {
-        return _db.Materias.ToList();
+        return _db.Materias.Where(p => p.IdUsuario == user).ToList();
     }
     public void AgregarMateria(Materia mat)
     {
+        mat.IdUsuario = user;
         _db.Materias.Add(mat);
         _db.SaveChanges();
     }
@@ -24,7 +31,7 @@ public class GestionMaterias
     {
         foreach (var m in _db.Materias)
         {
-            if (m.NombreMateria == mat.NombreMateria)
+            if (m.NombreMateria == mat.NombreMateria && m.IdUsuario == mat.IdUsuario)
             {
                 m.PesoMateria = mat.PesoMateria;
             }
@@ -39,7 +46,7 @@ public class GestionMaterias
         {
             for (int j = 0; j < _db.Materias.ToList().Count; j++)
             {
-                if (_db.Materias.ToList()[j].NombreMateria == nombres[i])
+                if (_db.Materias.ToList()[j].NombreMateria == nombres[i] && _db.Materias.ToList()[j].IdUsuario == user)
                 {
                     _db.Materias.ToList().RemoveAt(j);
                 }
