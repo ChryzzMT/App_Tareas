@@ -7,7 +7,7 @@ namespace tiendaweb_backend.Negocio;
 public class GestionTareas
 {
     private readonly AppDbContext _db;
-    private  static int _idenuser;
+    private static int _idenuser;
 
     public GestionTareas(AppDbContext db)
     {
@@ -128,17 +128,12 @@ public class GestionTareas
     
         public Tarea? Recomendacion()
         {
-
             var recomendacion = _db.Tareas.Where(p => p.idUsuario == _idenuser &&
                                                       (p.Estado.ToLower() == "pendiente" ||
                                                        p.Estado.ToLower() == "enprogreso") && p.FechaEntrega > DateTime.Now)
                 .OrderByDescending(t => t.PesoTarea + t.Materia.PesoMateria)
                 .ThenBy(k => k.FechaEntrega).FirstOrDefault();
-
+        
             return recomendacion;
         }
-        
-    
-
-
 }

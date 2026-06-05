@@ -12,7 +12,7 @@ public class Tarea
     public string? Descripcion { get; set; }
     public int? PesoTarea { get; set; }
     public DateTime? FechaEntrega { get; set; }
-    public string Estado { get; set; } 
+    public string Estado { get; set; }
     
     [ForeignKey("Materia")]
     public int idMateria { get; set; }
@@ -20,7 +20,5 @@ public class Tarea
     [ForeignKey("Usuario")]
     public int idUsuario { get; set; }
     public Usuario? Usuario { get; set; }
-    
-    
     
 }

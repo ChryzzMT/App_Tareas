@@ -7,4 +7,6 @@ public class AppDbContext : DbContext
     public DbSet<Materia> Materias { get; set; }
     public DbSet<Tarea> Tareas { get; set; }
     public DbSet<Usuario> Usuarios { get; set; }
+    
+    public DbSet<Notificacion> Notificaciones { get; set; }
 }

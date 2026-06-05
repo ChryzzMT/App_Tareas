@@ -12,7 +12,7 @@ public class GestionTareasController : Controller
 
     public GestionTareasController(AppDbContext db)
     {
-        gestionTareas = new GestionTareas(db );
+        gestionTareas = new GestionTareas(db);
     }
 
     [HttpPost("SETUSUARIO")]
