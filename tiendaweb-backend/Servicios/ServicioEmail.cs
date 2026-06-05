@@ -13,7 +13,7 @@ public class EmailService
         var mensaje = new MimeMessage();
         mensaje.From.Add(MailboxAddress.Parse(_email));
         mensaje.To.Add(MailboxAddress.Parse(destinatario));
-        mensaje.Subject = "⚠️ Tu tarea vence en 24 horas";
+        mensaje.Subject = "Tu tarea vence en 24 horas";
 
         mensaje.Body = new TextPart("plain")
         {
