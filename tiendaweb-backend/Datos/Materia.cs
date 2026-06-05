@@ -9,7 +9,7 @@ public class Materia
     [DatabaseGenerated(DatabaseGeneratedOption.Identity)] 
     public int IdMateria { get; set; }
     public string? NombreMateria {get; set; }
-    public int ? PesoMateria { get; set; }
+    public int ? PrioridadMateria { get; set; }
     
     [ForeignKey("Usuario")]
     public int IdUsuario { get; set; }

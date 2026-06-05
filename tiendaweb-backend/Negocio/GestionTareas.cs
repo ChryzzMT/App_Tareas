@@ -105,7 +105,7 @@ public class GestionTareas
         var tareasporprioridad = 
             _db.Tareas.Where(p=>p.idUsuario == _idenuser && 
                                 (p.Estado.ToLower() == "pendiente" ||  p.Estado.ToLower() == "enprogreso") &&  p.FechaEntrega > DateTime.Now )
-            .OrderByDescending( t => t.Materia.PesoMateria).ThenByDescending(m => m.PesoTarea)
+            .OrderByDescending( t => t.Materia.PrioridadMateria).ThenByDescending(m => m.PesoTarea)
             .ThenBy(k => k.FechaEntrega)
             .Select(g => new
         {
@@ -116,7 +116,7 @@ public class GestionTareas
             fechadeentrega = g.FechaEntrega,
             NombreMateria = g.Materia.NombreMateria,
             PesoTarea = g.PesoTarea,
-            PesoMateria = g.Materia.PesoMateria
+            PesoMateria = g.Materia.PrioridadMateria
            
 
 
@@ -131,7 +131,7 @@ public class GestionTareas
             var recomendacion = _db.Tareas.Where(p => p.idUsuario == _idenuser &&
                                                       (p.Estado.ToLower() == "pendiente" ||
                                                        p.Estado.ToLower() == "enprogreso") && p.FechaEntrega > DateTime.Now)
-                .OrderByDescending(t => t.PesoTarea + t.Materia.PesoMateria)
+                .OrderByDescending(t => t.PesoTarea + t.Materia.PrioridadMateria)
                 .ThenBy(k => k.FechaEntrega).FirstOrDefault();
         
             return recomendacion;

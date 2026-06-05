@@ -33,7 +33,7 @@ public class GestionMaterias
         {
             if (m.NombreMateria == mat.NombreMateria && m.IdUsuario == mat.IdUsuario)
             {
-                m.PesoMateria = mat.PesoMateria;
+                m.PrioridadMateria = mat.PrioridadMateria;
             }
         }
 
