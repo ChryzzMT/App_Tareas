@@ -1,7 +1,7 @@
 import {Component, inject} from '@angular/core';
 import {RouterLink} from '@angular/router';
 import {ApiClient} from '../core/http/api-client';
-import {Materia} from './Materia';
+import {Materia} from './materia';
 
 @Component({
   selector: 'app-materias',

@@ -1,7 +1,7 @@
 import {Component, inject} from '@angular/core';
 import {ApiClient} from '../core/http/api-client';
 import {ActivatedRoute, Router, RouterLink} from '@angular/router';
-import {Materia} from './Materia';
+import {Materia} from './materia';
 import { FormsModule } from '@angular/forms';
 
 @Component({
