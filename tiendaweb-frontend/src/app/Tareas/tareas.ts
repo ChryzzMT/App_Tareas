@@ -32,12 +32,12 @@ export class Tareas {
   private router = inject(Router)
 
   editar(tarea: Tarea) {
-    this.router.navigate(['/tarea'], { state : { tarea }})
+    this.router.navigate(['/tarea'], { state: { tarea } });
   }
 }
 
 export interface Tarea {
-  IdTarea: number;
+  idTarea: number;
   titulo: string;
   descripcion: string;
   pesoTarea: number;

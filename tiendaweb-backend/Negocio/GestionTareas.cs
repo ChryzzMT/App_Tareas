@@ -22,7 +22,7 @@ public class GestionTareas
 
     public List<Tarea> ListarTareas()
     {
-        return _db.Tareas.Where(p  => p.idUsuario == _idenuser).ToList();
+        return _db.Tareas.ToList();
     }
 
     public void AgregarTarea(Tarea tarea)
@@ -79,6 +79,21 @@ public class GestionTareas
         if (tarea != null)
         {
             tarea.FechaEntrega = new DateTime(year, mes, dia, hora, minuto,0);
+            _db.SaveChanges();
+        }
+    }
+    
+    public void ActualizarTodo(Tarea tarea)
+    {
+        var t = _db.Tareas.FirstOrDefault(x => x.IdTarea == tarea.IdTarea);
+        if (t != null)
+        {
+            t.Titulo = tarea.Titulo;
+            t.Descripcion = tarea.Descripcion;
+            t.PesoTarea = tarea.PesoTarea;
+            t.FechaEntrega = tarea.FechaEntrega;
+            t.Estado = tarea.Estado;
+            t.idMateria = tarea.idMateria;
             _db.SaveChanges();
         }
     }

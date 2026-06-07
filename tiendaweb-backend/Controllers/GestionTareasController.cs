@@ -45,11 +45,12 @@ public class GestionTareasController : Controller
         gestionTareas.ActualizarTitulo(antT, nuevoT);
     }
 
-    [HttpDelete("Eliminar-Tarea")]
+    [HttpDelete("Eliminar-Tarea/{titulo}")]
     public void EliminarTarea(string titulo)
     {
         gestionTareas.EliminarTarea(titulo);
     }
+
 
     [HttpPut("Actualizar-descripciondetarea")]
     public void ActualizarDescripcionTarea(int id, string descripcion)
@@ -61,6 +62,12 @@ public class GestionTareasController : Controller
     public void ActualizarFechadeentrega(int idtarea, int year, int mes, int dia, int hora, int minuto)
     {
         gestionTareas.ActualizarFecha(idtarea, year, mes, dia, hora, minuto);
+    }
+    
+    [HttpPut("Actualizar-Todo")]
+    public void ActualizarTodo([FromBody] Tarea tarea)
+    {
+        gestionTareas.ActualizarTodo(tarea);
     }
 
     [HttpGet("MostrarPorPrioridad")]

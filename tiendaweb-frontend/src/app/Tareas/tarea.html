@@ -1,50 +1,48 @@
-﻿<div class = "container">
-  <div class = "row justify-content-center">
-    <div class = "col-md-6">
+﻿<div class="container">
+  <div class="row justify-content-center">
+    <div class="col-md-6">
 
-      <h2> {{ esEdicion ? 'Editar Tarea' : 'Nueva Tarea' }}</h2>
+      <h2>Nueva Tarea</h2>
       <br/>
 
-      <div>
-        <label class = "form-label"> Titulo </label>
-        <input type = "text" class = "form-control" [(ngModel)] = "tarea.titulo">
+      <div class="mb-3">
+        <label class="form-label">Titulo</label>
+        <input type="text" class="form-control" [(ngModel)]="tarea.titulo">
       </div>
 
-      <div>
-        <label class = "form-label"> Descripcion </label>
-        <input type = "text" class = "form-control" [(ngModel)] = "tarea.descripcion">
+      <div class="mb-3">
+        <label class="form-label">Descripcion</label>
+        <input type="text" class="form-control" [(ngModel)]="tarea.descripcion">
       </div>
 
-      <div>
-        <label class = "form-label"> Peso Tarea </label>
-        <input type = "text" class = "form-control" [(ngModel)] = "tarea.pesoTarea">
+      <div class="mb-3">
+        <label class="form-label">Peso Tarea</label>
+        <input type="number" class="form-control" [(ngModel)]="tarea.pesoTarea">
       </div>
 
-      <div>
-        <label class = "form-label"> Fecha Entrega </label>
-        <input type = "text" class = "form-control" [(ngModel)] = "tarea.fechaEntrega">
+      <div class="mb-3">
+        <label class="form-label">Fecha Entrega</label>
+        <input type="datetime-local" class="form-control" [(ngModel)]="tarea.fechaEntrega">
       </div>
 
-      <div>
-        <label class = "form-label"> Estado </label>
-        <input type = "text" class = "form-control" [(ngModel)] = "tarea.estado">
+      <div class="mb-3">
+        <label class="form-label">Estado</label>
+        <select class="form-select" [(ngModel)]="tarea.estado">
+          <option value="Pendiente">Pendiente</option>
+          <option value="Activa">Activa</option>
+        </select>
       </div>
 
-      <div>
-        <label class = "form-label"> ID Materia </label>
-        <input type = "text" class = "form-control" [(ngModel)] = "tarea.idMateria">
+      <div class="mb-3">
+        <label class="form-label">ID Materia</label>
+        <input type="number" class="form-control" [(ngModel)]="tarea.idMateria">
       </div>
-
-      <div class = "text-center">
-        @if (esEdicion) {
-          <button class="btn btn-primary" (click)="actualizar()">Actualizar</button>
-          <button class="btn btn-danger" (click)="eliminar()">Eliminar</button>
-        } @else {
-          <button class="btn btn-primary" (click)="guardar()">Guardar</button>
-        }
-        <button class="btn btn-secondary" routerLink="/tareas">Cancelar</button>
-      </div>
-
+      @if (esEdicion) {
+        <button class="btn btn-primary" (click)="actualizar()">Actualizar</button>
+      } @else {
+        <button class="btn btn-primary" (click)="guardar()">Guardar</button>
+      }
+      <button class="btn btn-secondary" routerLink="/tareas">Cancelar</button>
     </div>
   </div>
 </div>
