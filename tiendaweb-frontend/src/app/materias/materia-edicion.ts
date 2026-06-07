@@ -60,4 +60,5 @@ export class MateriaEdicion {
       error: error => console.error('Error al actualizar materia', error)
     });
   }
+
 }

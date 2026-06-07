@@ -16,16 +16,16 @@ export class Tareas {
   tareas: Tarea[] = [];
 
   ngOnInit() {
-    this.api.get<Tarea[]>(this.url + '/Listar-Tareas').subscribe( {
-      next : data => this.tareas = data,
-      error : error => console.error('Error al obtener tareas', error)
+    this.api.get<Tarea[]>(this.url + '/Listar-Tareas').subscribe({
+      next: data => this.tareas = data,
+      error: error => console.error('Error al obtener tareas', error)
     });
   }
 
     eliminar(titulo: string) {
     this.api.delete(this.url + '/Eliminar-Tarea/' + titulo).subscribe({
       next: () => this.tareas = this.tareas.filter(t => t.titulo !== titulo),
-      error: error => console.error('Error al eliminar tarea', error)
+      error: error => console.error( 'Error al eliminar tarea', error)
     });
   }
 

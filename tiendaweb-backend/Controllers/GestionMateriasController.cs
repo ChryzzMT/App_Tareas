@@ -37,9 +37,9 @@ public class GestionMateriasController:Controller
         GestionMaterias.ActualizarPesoMateria(m);
     }
     
-    [HttpDelete("eliminar-materias")]
-    public void EliminarMaterias([FromBody] List<string> nombres)
+    [HttpDelete("eliminar-materia/{nombre}")]
+    public void EliminarMaterias(string nombre)
     {
-        GestionMaterias.EliminarMaterias( nombres);
+        GestionMaterias.EliminarMateria(nombre);
     }
 }

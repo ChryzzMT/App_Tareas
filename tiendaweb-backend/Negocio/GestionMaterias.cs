@@ -39,19 +39,14 @@ public class GestionMaterias
 
         _db.SaveChanges();
     }
-    
-    public void EliminarMaterias(List<string> nombres)
+
+    public void EliminarMateria(string nombre)
     {
-        for (int i = 0; i < nombres.Count; i++)
+        var materia = _db.Materias.FirstOrDefault(m => m.NombreMateria == nombre);
+        if (materia != null)
         {
-            for (int j = 0; j < _db.Materias.ToList().Count; j++)
-            {
-                if (_db.Materias.ToList()[j].NombreMateria == nombres[i] && _db.Materias.ToList()[j].IdUsuario == user)
-                {
-                    _db.Materias.ToList().RemoveAt(j);
-                }
-            }
+            _db.Materias.Remove(materia);
+            _db.SaveChanges();
         }
-        _db.SaveChanges();
     }
 }

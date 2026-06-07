@@ -16,11 +16,18 @@
 
       <div class="mb-3">
         <label class="form-label">Prioridad Materia</label>
-        <input type="text" class="form-control" [(ngModel)]="materia.prioridadMateria">
+        <select class="form-select" [(ngModel)]="materia.prioridadMateria">
+            <option value="1">1</option>
+            <option value="2">2</option>
+            <option value="3">3</option>
+            <option value="5">5</option>
+            <option value="8">8</option>
+            <option value="13">13</option>
+          </select>
       </div>
       <div class="text-center">
         <button type="submit" class="btn btn-primary me-2" (click)="guardar()">Guardar</button>
-        <button type="button" class="btn btn-secondary" routerLink="/productos">Cancelar</button>
+        <button type="button" class="btn btn-secondary" routerLink="/materias">Cancelar</button>
       </div>
     </div>
   </div>

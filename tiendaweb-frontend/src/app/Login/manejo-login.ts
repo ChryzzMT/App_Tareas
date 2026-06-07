@@ -9,10 +9,7 @@ import {email} from '@angular/forms/signals';
 @Component({
   selector: 'app-manejo-login',
   standalone: true,
-  imports: [
-    RouterLink,
-    FormsModule
-  ],
+  imports: [RouterLink, FormsModule],
   templateUrl: './manejo-login.html',
 })
 export class ManejoLogin {
@@ -40,7 +37,7 @@ export class ManejoLogin {
 
     const navegacion = this.router.getCurrentNavigation();
 
-    const paginaAnterior =navegacion?.previousNavigation?.finalUrl?.toString();
+    const paginaAnterior = navegacion?.previousNavigation?.finalUrl?.toString();
 
     if (paginaAnterior && paginaAnterior.includes('/crearcuenta')) {
       this.aviso = "¡Tu cuenta ha sido creada con éxito! Por favor, introduce tus datos para iniciar sesión.";
@@ -48,12 +45,8 @@ export class ManejoLogin {
 
   }
 
-
-
-
-  Login():void {
-
-    if(!this.Usuario.email || !this.Usuario.contrasena){
+  Login(): void {
+    if (!this.Usuario.email || !this.Usuario.contrasena) {
       this.errormensaje = "Por favor, llene todos los campos.";
       return;
     }
@@ -61,32 +54,30 @@ export class ManejoLogin {
     const endpoint = `${this.url}?m=${this.Usuario.email}&c=${this.Usuario.contrasena}`;
 
     this.apiService.get<usuario>(endpoint).subscribe({
-      next: (Usuariologueado : usuario )=> {
-
-        if(Usuariologueado){
+      next: (Usuariologueado: usuario) => {
+        if (Usuariologueado) {
           localStorage.setItem('usuarioId', Usuariologueado.idUsuario.toString());
           localStorage.setItem('usuarioNombre', Usuariologueado.nombre);
 
-          this.Usuario.nombre = Usuariologueado.nombre;
-          this.Usuario.email = Usuariologueado.email;
-          this.Usuario.contrasena = Usuariologueado.contrasena;
-          this.Usuario.idUsuario = Usuariologueado.idUsuario;
+          this.apiService.put(`http://localhost:5056/GestionMaterias/SetUsuario?userid=${Usuariologueado.idUsuario}`, {}).subscribe();
 
-          console.log(`¡Bienvenido de nuevo, ${Usuariologueado.nombre}!`);
-        }
-        else{
-          this.errormensaje= 'El correo o la contraseña son incorrectos.';
-        }
+          this.apiService.post(`http://localhost:5056/GestionTareas/SETUSUARIO?usuario=${Usuariologueado.idUsuario}`, {}).subscribe({
+            next: () => {
+              this.router.navigate(['/tareas']);
+            },
+            error: err => console.error('Error seteando usuario tareas', err)
+          });
 
+        } else {
+          this.errormensaje = 'El correo o la contraseña son incorrectos.';
+        }
       },
       error: (err) => {
         console.error('Error al conectar con .NET:', err);
         this.errormensaje = 'Hubo un fallo de comunicación con el servidor.';
       }
     });
-
   }
-
 
 
 

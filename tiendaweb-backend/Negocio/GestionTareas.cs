@@ -22,7 +22,7 @@ public class GestionTareas
 
     public List<Tarea> ListarTareas()
     {
-        return _db.Tareas.ToList();
+        return _db.Tareas. Where(p => p.idUsuario == _idenuser).ToList();
     }
 
     public void AgregarTarea(Tarea tarea)
