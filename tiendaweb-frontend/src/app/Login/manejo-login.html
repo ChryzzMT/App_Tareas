@@ -1,0 +1,34 @@
+<div style="margin: 20px;">
+  <h2>En esta pagina puedes logearte</h2>
+
+  @if (errormensaje) {
+    <p style="color: red; font-weight: bold;">{{ errormensaje }}</p>
+  }
+
+
+
+    <fieldset>
+      <legend> Requisitos para poder Loguearte</legend>
+  <form (ngSubmit)="Login()">
+
+    <div style="margin-bottom: 15px;">
+      <label style="display: block; margin-bottom: 5px;">Email:</label>
+      <input type="email" name="email" required [(ngModel)]="Usuario.email" style="width: 250px;">
+    </div>
+
+    <div style="margin-bottom: 15px;">
+      <label style="display: block; margin-bottom: 5px;">Contraseña:</label>
+      <input type="password" name="contrasena" required [(ngModel)]="Usuario.contrasena" style="width: 250px;">
+    </div>
+
+    <button type="submit" style="padding: 5px 15px; cursor: pointer;">
+      Enviar
+    </button>
+
+    <p style="margin-top: 20px;">
+      ¿No tienes cuenta? <a routerLink="/crearcuenta">Regístrate Aquí</a>
+    </p>
+
+  </form>
+    </fieldset>
+</div>
