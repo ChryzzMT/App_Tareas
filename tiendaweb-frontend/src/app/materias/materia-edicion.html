@@ -1,0 +1,28 @@
+<div class="container">
+  <div class="row justify-content-center">
+    <div class="col-md-6">
+      <div class="mb-3">
+        <label class="form-label">Código</label>
+        <input type="text"
+               [disabled]="materia.idMateria == 0"
+               class="form-control"
+               [(ngModel)]="materia.idMateria">
+      </div>
+
+      <div class="mb-3">
+        <label class="form-label">Nombre</label>
+        <input type="text" class="form-control" [(ngModel)]="materia.nombreMateria">
+      </div>
+
+      <div class="mb-3">
+        <label class="form-label">Prioridad Materia</label>
+        <input type="text" class="form-control" [(ngModel)]="materia.prioridadMateria">
+      </div>
+      <div class="text-center">
+        <button type="submit" class="btn btn-primary me-2" (click)="guardar()">Guardar</button>
+        <button type="button" class="btn btn-secondary" routerLink="/productos">Cancelar</button>
+      </div>
+    </div>
+  </div>
+</div>
+
