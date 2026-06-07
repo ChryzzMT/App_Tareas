@@ -29,7 +29,6 @@ export class ProductoEdicion {
 
   ngOnInit() {
     const id = Number(this.route.snapshot.paramMap.get('id'));
-
     if (id > 0) {
       this.backendApi.get<Producto>(this.url+'/'+id).subscribe({
         next: data => this.producto = data,
