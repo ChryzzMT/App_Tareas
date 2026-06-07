@@ -25,9 +25,9 @@ public class GestionTareas
         return _db.Tareas.Where(p  => p.idUsuario == _idenuser).ToList();
     }
 
-    public void AgregarTarea(Tarea tarea, int year, int mes, int dia, int hora, int minuto)
+    public void AgregarTarea(Tarea tarea)
     {
-        tarea.FechaEntrega = new DateTime(year, mes, dia, hora, minuto, 0);
+        tarea.idUsuario = 1;
         _db.Tareas.Add(tarea);
         _db.SaveChanges();
     }
