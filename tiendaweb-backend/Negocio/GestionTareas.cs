@@ -27,7 +27,7 @@ public class GestionTareas
 
     public void AgregarTarea(Tarea tarea)
     {
-        tarea.idUsuario = 1;
+        tarea.idUsuario = _idenuser;
         _db.Tareas.Add(tarea);
         _db.SaveChanges();
     }

@@ -16,9 +16,15 @@ export class Tareas {
   tareas: Tarea[] = [];
 
   ngOnInit() {
-    this.api.get<Tarea[]>(this.url + '/Listar-Tareas').subscribe({
-      next: data => this.tareas = data,
-      error: error => console.error('Error al obtener tareas', error)
+    const usuarioId = localStorage.getItem('usuarioId');
+
+    this.api.post(this.url + '/SETUSUARIO?usuario=' + usuarioId, {}).subscribe({
+      next: () => {
+        this.api.get<Tarea[]>(this.url + '/Listar-Tareas').subscribe({
+          next: data => this.tareas = data,
+          error: error => console.error('Error al obtener tareas', error)
+        });
+      }
     });
   }
 

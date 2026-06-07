@@ -46,19 +46,20 @@ export class Tarea {
 
   esEdicion = false;
 
+  materias: {idMateria: number, nombreMateria: string}[] = [];
+
   ngOnInit() {
-    const nav = this.router.getCurrentNavigation();
-    if (nav?.extras?.state?.['tarea']) {
-      this.tarea = nav.extras.state['tarea'];
-      this.esEdicion = true;
-    } else {
-      // Si getCurrentNavigation() ya es null, buscar en history.state
-      const state = history.state;
-      if (state && state['tarea']) {
-        this.tarea = state['tarea'];
-        this.esEdicion = true;
+    const usuarioId = localStorage.getItem('usuarioId');
+
+    // Cargar materias del usuario
+    this.api.put('http://localhost:5056/GestionMaterias/SetUsuario?userid=' + usuarioId, {}).subscribe({
+      next: () => {
+        this.api.get<{idMateria: number, nombreMateria: string}[]>('http://localhost:5056/GestionMaterias/lista-materias').subscribe({
+          next: data => this.materias = data,
+          error: error => console.error('Error al obtener materias', error)
+        });
       }
-    }
+    });
   }
 
 }
