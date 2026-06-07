@@ -3,6 +3,8 @@ import { ApiClient } from '../core/http/api-client';
 import {RouterLink} from '@angular/router';
 import { CommonModule} from '@angular/common';
 import { Router } from '@angular/router'
+import { Materia } from '../Materias/materia'
+
 
 @Component({
   selector: 'app-tareas',
@@ -49,6 +51,6 @@ export interface Tarea {
   pesoTarea: number;
   fechaEntrega:string;
   estado: string;
-  idMateria: number;
+  materia: Materia;
 }
 

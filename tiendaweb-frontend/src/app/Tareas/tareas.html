@@ -16,7 +16,7 @@
           <th scope = "col"> Peso Tarea </th>
           <th scope = "col"> Fecha de Entrega </th>
           <th scope = "col"> Estado </th>
-          <th scope = "col"> Id de la Materia </th>
+          <th scope = "col"> Materia </th>
         </tr>
         </thead>
         <tbody class="table-group-divider">
@@ -27,7 +27,7 @@
               <td>{{ tarea.pesoTarea }}</td>
               <td>{{ tarea.fechaEntrega }}</td>
               <td>{{ tarea.estado }}</td>
-              <td>{{ tarea.idMateria }}</td>
+              <td>{{ tarea.materia?.nombreMateria }}</td>
               <td>
                 <div class="btn-group" role="group">
                   <button class="btn btn-outline-primary btn-sm" (click)="editar(tarea)">Editar</button>

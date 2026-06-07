@@ -3,6 +3,7 @@ import { ApiClient } from '../core/http/api-client';
 import { RouterLink } from '@angular/router';
 import { FormsModule } from '@angular/forms';
 import { Router } from '@angular/router';
+import { Materia } from '../Materias/materia'
 
 @Component({
   selector: 'app-tarea',
@@ -21,13 +22,13 @@ export class Tarea {
     pesoTarea: 0,
     fechaEntrega: '',
     estado: '',
-    idMateria: 0
+    nombreMateria: '',
   };
 
   guardar() {
     this.api.post(this.url + '/Crear-Tarea', this.tarea).subscribe({
       next: () => {
-        this.tarea = {idTarea: 0, titulo: '', descripcion: '', fechaEntrega: '', pesoTarea: 0, estado: '', idMateria: 0};
+        this.tarea = {idTarea: 0, titulo: '', descripcion: '', fechaEntrega: '', pesoTarea: 0, estado: '', nombreMateria: ''};
         this.router.navigate(['/tareas']);
       },
       error: error => console.error('Error al guardar la tarea', error)
@@ -37,7 +38,7 @@ export class Tarea {
   actualizar() {
     this.api.put(this.url + '/Actualizar-Todo', this.tarea).subscribe({
       next: () => {
-        this.tarea = {idTarea: 0, titulo: '', descripcion: '', fechaEntrega: '', pesoTarea: 0, estado: '', idMateria: 0};
+        this.tarea = {idTarea: 0, titulo: '', descripcion: '', fechaEntrega: '', pesoTarea: 0, estado: '', nombreMateria: ''};
         this.router.navigate(['/tareas']);
       },
       error: error => console.error('Error al actualizar la tarea', error)
