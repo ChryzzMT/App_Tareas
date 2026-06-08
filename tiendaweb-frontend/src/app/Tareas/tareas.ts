@@ -4,6 +4,9 @@ import {RouterLink} from '@angular/router';
 import { CommonModule} from '@angular/common';
 import { Router } from '@angular/router'
 import { Materia } from '../Materias/materia'
+import{ SubTareasVer} from '../SubTareas/subTareasVer';
+import {Subtarea} from '../SubTareas/Subtarea';
+
 
 
 @Component({
@@ -16,6 +19,7 @@ export class Tareas {
   private url = 'http://localhost:5056/GestionTareas';
 
   tareas: Tarea[] = [];
+  subtareas: Subtarea[] = []
 
   ngOnInit() {
     const usuarioId = localStorage.getItem('usuarioId');
@@ -42,6 +46,11 @@ export class Tareas {
   editar(tarea: Tarea) {
     this.router.navigate(['/tarea'], { state: { tarea } });
   }
+  verSubtareas(tarea: Tarea) {
+    this.router.navigate(['/subtareas'], { state: { idTarea: tarea.idTarea } });
+  }
+
+  protected readonly SubTareasVer = SubTareasVer;
 }
 
 export interface Tarea {
@@ -51,6 +60,7 @@ export interface Tarea {
   pesoTarea: number;
   fechaEntrega:string;
   estado: string;
+  idMateria: number;
   materia: Materia;
 }
 

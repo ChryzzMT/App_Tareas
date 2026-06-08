@@ -14,13 +14,14 @@ export class Calendario {
 
   mesActual = new Date().getMonth() + 1;
   anioActual = new Date().getFullYear();
-  nombreMes = '';
+
   dias: any[] = [];
   diasVacios: number[] = [];
 
   meses = ['Enero','Febrero','Marzo','Abril','Mayo','Junio',
     'Julio','Agosto','Septiembre','Octubre','Noviembre','Diciembre'];
 
+  nombreMes = this.meses[this.mesActual-1];
   ngOnInit() {
     const usuarioId = localStorage.getItem('usuarioId');
     this.api.put(this.url + '/setuserid?id=' + usuarioId, {}).subscribe({

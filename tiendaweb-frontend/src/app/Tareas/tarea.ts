@@ -22,13 +22,14 @@ export class Tarea {
     pesoTarea: 0,
     fechaEntrega: '',
     estado: '',
-    nombreMateria: '',
+    idMateria: 0
+
   };
 
   guardar() {
     this.api.post(this.url + '/Crear-Tarea', this.tarea).subscribe({
       next: () => {
-        this.tarea = {idTarea: 0, titulo: '', descripcion: '', fechaEntrega: '', pesoTarea: 0, estado: '', nombreMateria: ''};
+        this.tarea = {idTarea: 0, titulo: '', descripcion: '', fechaEntrega: '', pesoTarea: 0, estado: '', idMateria: 0};
         this.router.navigate(['/tareas']);
       },
       error: error => console.error('Error al guardar la tarea', error)
@@ -38,7 +39,7 @@ export class Tarea {
   actualizar() {
     this.api.put(this.url + '/Actualizar-Todo', this.tarea).subscribe({
       next: () => {
-        this.tarea = {idTarea: 0, titulo: '', descripcion: '', fechaEntrega: '', pesoTarea: 0, estado: '', nombreMateria: ''};
+        this.tarea = {idTarea: 0, titulo: '', descripcion: '', fechaEntrega: '', pesoTarea: 0, estado: '', idMateria: 0};
         this.router.navigate(['/tareas']);
       },
       error: error => console.error('Error al actualizar la tarea', error)

@@ -1,4 +1,5 @@
-﻿using tiendaweb_backend.Datos;
+﻿using Microsoft.EntityFrameworkCore;
+using tiendaweb_backend.Datos;
 
 namespace tiendaweb_backend.Negocio;
 
@@ -17,9 +18,9 @@ public class GestionSubtareas
         userid = id;
     }
 
-    public List<Subtarea> ListarSubtareasTarea( int idtarea)
+    public List<Subtarea> ListarSubtareasTarea(int idtarea)
     {
-        var result = _db.Subtareas.Where(x=> x.Tarea.idUsuario == userid && x.idtarea == idtarea).ToList();
+        var result = _db.Subtareas.Include(p=> p.Tarea).Where(x=> x.Tarea.idUsuario == userid && x.idtarea == idtarea).ToList();
         
         return result;
     }
