@@ -27,14 +27,13 @@ export class MateriaEdicion {
   private router = inject(Router);
   private route = inject(ActivatedRoute);
 
-  ngOnInit() {
-    const id = Number(this.route.snapshot.paramMap.get('id'));
+  esEdicion = false;
 
-    if (id > 0) {
-      this.backendApi.get<Materia>(this.url+'/'+id).subscribe({
-        next: data => this.materia = data,
-        error: error => console.error('Error al obtener producto', error)
-      });
+  ngOnInit() {
+    const state = history.state;
+    if (state && state['materia']) {
+      this.materia = state['materia'];
+      this.esEdicion = true;
     }
   }
 
@@ -55,10 +54,11 @@ export class MateriaEdicion {
   }
 
   actualizar() {
-    this.backendApi.put(this.url+'/'+this.materia.idMateria,this.materia).subscribe({
+    this.backendApi.put(this.url + '/actualizar', this.materia).subscribe({
       next: () => this.router.navigate(['/materias']),
       error: error => console.error('Error al actualizar materia', error)
     });
   }
+
 
 }

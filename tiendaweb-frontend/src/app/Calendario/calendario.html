@@ -1,10 +1,33 @@
-﻿<!DOCTYPE html>
-<html lang="en">
-<head>
-  <meta charset="UTF-8">
-  <title>Title</title>
-</head>
-<body>
+﻿<div class="container my-4">
+  <div class="d-flex justify-content-between align-items-center mb-4">
+    <button class="btn btn-outline-primary" (click)="mesAnterior()">← Anterior</button>
+    <h2 class="mb-0">{{ nombreMes }} {{ anioActual }}</h2>
+    <button class="btn btn-outline-primary" (click)="mesSiguiente()">Siguiente →</button>
+  </div>
 
-</body>
-</html>
+  <div class="row text-center fw-bold mb-2">
+    <div class="col">Lun</div>
+    <div class="col">Mar</div>
+    <div class="col">Mié</div>
+    <div class="col">Jue</div>
+    <div class="col">Vie</div>
+    <div class="col">Sáb</div>
+    <div class="col">Dom</div>
+  </div>
+
+  <div class="d-flex flex-wrap">
+    @for (vacio of diasVacios; track $index) {
+      <div style="width: 14.28%; min-height: 100px;"></div>
+    }
+    @for (dia of dias; track dia.dia) {
+      <div class="border p-2" style="width: 14.28%; min-height: 100px;">
+        <div class="fw-bold mb-1">{{ dia.dia }}</div>
+        @for (tarea of dia.listaTareaDia; track tarea.idTarea) {
+          <div class="badge bg-primary text-wrap text-start w-100 mb-1" style="font-size: 0.7rem;">
+            {{ tarea.titulo }}
+          </div>
+        }
+      </div>
+    }
+  </div>
+</div>

@@ -32,4 +32,7 @@ export class ListaMaterias {
       error: error => console.error('Error al eliminar materia', error)
     });
   }
+  editar(materia: Materia) {
+    this.router.navigate(['/materias/editar'], { state: { materia } });
+  }
 }

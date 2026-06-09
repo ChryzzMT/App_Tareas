@@ -17,7 +17,14 @@
 
       <div class="mb-3">
         <label class="form-label">Peso Tarea</label>
-        <input type="number" class="form-control" [(ngModel)]="tarea.pesoTarea">
+        <select class="form-select" [(ngModel)]="tarea.pesoTarea">
+          <option value="1">1</option>
+          <option value="2">2</option>
+          <option value="3">3</option>
+          <option value="5">5</option>
+          <option value="8">8</option>
+          <option value="13">13</option>
+        </select>
       </div>
 
       <div class="mb-3">
@@ -34,8 +41,12 @@
       </div>
 
       <div class="mb-3">
-        <label class="form-label">ID Materia</label>
-        <input type="number" class="form-control" [(ngModel)]="tarea.idMateria">
+        <label class="form-label">Materia</label>
+        <select class="form-select" [(ngModel)]="tarea.idMateria">
+          @for (materia of materias; track materia.idMateria) {
+            <option [value]="materia.idMateria">{{ materia.nombreMateria }}</option>
+          }
+        </select>
       </div>
       @if (esEdicion) {
         <button class="btn btn-primary" (click)="actualizar()">Actualizar</button>

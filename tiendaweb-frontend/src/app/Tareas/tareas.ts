@@ -3,6 +3,11 @@ import { ApiClient } from '../core/http/api-client';
 import {RouterLink} from '@angular/router';
 import { CommonModule} from '@angular/common';
 import { Router } from '@angular/router'
+import { Materia } from '../Materias/materia'
+import{ SubTareasVer} from '../SubTareas/subTareasVer';
+// import {Subtarea} from '../SubTareas/Subtarea';
+
+
 
 @Component({
   selector: 'app-tareas',
@@ -15,10 +20,17 @@ export class Tareas {
 
   tareas: Tarea[] = [];
 
+
   ngOnInit() {
-    this.api.get<Tarea[]>(this.url + '/Listar-Tareas').subscribe({
-      next: data => this.tareas = data,
-      error: error => console.error('Error al obtener tareas', error)
+    const usuarioId = localStorage.getItem('usuarioId');
+
+    this.api.post(this.url + '/SETUSUARIO?usuario=' + usuarioId, {}).subscribe({
+      next: () => {
+        this.api.get<Tarea[]>(this.url + '/Listar-Tareas').subscribe({
+          next: data => this.tareas = data,
+          error: error => console.error('Error al obtener tareas', error)
+        });
+      }
     });
   }
 
@@ -34,6 +46,11 @@ export class Tareas {
   editar(tarea: Tarea) {
     this.router.navigate(['/tarea'], { state: { tarea } });
   }
+  verSubtareas(tarea: Tarea) {
+    this.router.navigate(['/subtareas'], { state: { idTarea: tarea.idTarea } });
+  }
+
+  protected readonly SubTareasVer = SubTareasVer;
 }
 
 export interface Tarea {
@@ -44,5 +61,6 @@ export interface Tarea {
   fechaEntrega:string;
   estado: string;
   idMateria: number;
+  materia: Materia;
 }
 

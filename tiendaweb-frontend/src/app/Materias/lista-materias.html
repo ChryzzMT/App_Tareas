@@ -11,8 +11,8 @@
       <table class="table table-hover">
         <thead>
         <tr>
-          <th scope="col">nombreMateria</th>
-          <th scope="col">prioridadMateria</th>
+          <th scope="col">Materia</th>
+          <th scope="col">Prioridad de la Materia</th>
           <th scope="col">Acciones</th>
         </tr>
         </thead>
@@ -22,6 +22,7 @@
               <td>{{ materia.nombreMateria }}</td>
               <td>{{ materia.prioridadMateria }}</td>
               <td>
+                <button class="btn btn-outline-primary btn-sm" (click)="editar(materia)">Editar</button>
                 <button class="btn btn-outline-danger btn-sm" (click)="eliminar(materia.nombreMateria)">Eliminar</button>
               </td>
             </tr>
