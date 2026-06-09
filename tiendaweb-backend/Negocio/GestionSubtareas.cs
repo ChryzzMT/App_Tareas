@@ -20,7 +20,7 @@ public class GestionSubtareas
 
     public List<Subtarea> ListarSubtareasTarea(int idtarea)
     {
-        var result = _db.Subtareas.Include(p=> p.Tarea).Where(x=> x.Tarea.idUsuario == userid && x.idtarea == idtarea).ToList();
+        var result = _db.Subtareas.Include(x=> x.Tarea).Where(x=> x.Tarea.idUsuario == userid && x.idtarea == idtarea).ToList();
         
         return result;
     }

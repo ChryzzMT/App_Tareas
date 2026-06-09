@@ -6,7 +6,7 @@ import {CrearCuenta} from './CrearCuenta/crearcuenta';
 import {ListaMaterias } from './Materias/lista-materias';
 import {MateriaEdicion} from'./Materias/materia-edicion'
 import { Calendario } from './Calendario/calendario';
-import {Subtarea} from './SubTareas/Subtarea';
+// import {Subtarea} from './SubTareas/Subtarea';
 import {SubTareasVer} from './SubTareas/subTareasVer';
 
 export const routes: Routes = [
@@ -18,5 +18,5 @@ export const routes: Routes = [
   { path: 'materias', component: ListaMaterias },
   {path: 'materias/editar', component:MateriaEdicion},
   { path: 'calendario', component: Calendario },
-  { path: 'subtarea' , component: SubTareasVer}
+  { path: 'subtareas' , component: SubTareasVer}
 ];

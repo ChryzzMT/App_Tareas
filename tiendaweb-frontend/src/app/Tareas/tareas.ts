@@ -5,7 +5,7 @@ import { CommonModule} from '@angular/common';
 import { Router } from '@angular/router'
 import { Materia } from '../Materias/materia'
 import{ SubTareasVer} from '../SubTareas/subTareasVer';
-import {Subtarea} from '../SubTareas/Subtarea';
+// import {Subtarea} from '../SubTareas/Subtarea';
 
 
 
@@ -19,7 +19,7 @@ export class Tareas {
   private url = 'http://localhost:5056/GestionTareas';
 
   tareas: Tarea[] = [];
-  subtareas: Subtarea[] = []
+
 
   ngOnInit() {
     const usuarioId = localStorage.getItem('usuarioId');

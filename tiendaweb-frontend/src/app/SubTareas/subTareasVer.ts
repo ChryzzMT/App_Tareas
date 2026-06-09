@@ -3,8 +3,8 @@ import { ApiClient } from '../core/http/api-client';
 import { RouterLink } from '@angular/router';
 import { FormsModule } from '@angular/forms';
 import { Router } from '@angular/router';
-import { Subtarea } from './Subtarea';
-import {Tarea} from '../Tareas/tarea';
+// import { Subtarea } from './Subtarea';
+import {Tarea} from '../Tareas/tareas';
 
 @Component({
   selector: 'app-materias',
@@ -12,16 +12,16 @@ import {Tarea} from '../Tareas/tarea';
   templateUrl: './subTareasVer.html',
 })
 export class SubTareasVer {
-  subtarea: Subtarea ={
-    idsubtarea: 0,
-    descripcion: '',
-    idtarea:0
-  }
+  // subtarea: Subtarea ={
+  //   idsubtarea: 0,
+  //   descripcion: '',
+  //   idtarea:0
+  // }
   private api = inject(ApiClient);
   private router = inject(Router);
   private url = 'http://localhost:5056/GestionSubtarea';
 
-  subtareas: Subtarea[] = []
+  subtareas: Subtarea1[] = []
 
   idtarea: number = 0;
 
@@ -36,9 +36,13 @@ export class SubTareasVer {
 
 
   cargarsubtareas() {
-    this.api.get<Subtarea[]>(this.url + '/ListarSubtareas/' + this.idtarea).subscribe({
-      next: data => this.subtareas = data,
-      error: error => console.error('Error al obtener materias', error)
+    // Concatenamos '?idtarea=' antes del ID para que coincida con el backend
+    this.api.get<Subtarea1[]>(`${this.url}/ListarSubtareas?idtarea=${this.idtarea}`).subscribe({
+      next: data => {
+        this.subtareas = data;
+        console.log('Subtareas cargadas:', data);
+      },
+      error: error => console.error('Error al obtener subtareas', error)
     });
   }
 
@@ -48,6 +52,14 @@ export class SubTareasVer {
       error: error => console.error('Error al eliminar materia', error)
     });
   }
+}
+
+export interface Subtarea1 {
+  idsubtarea: number;
+  descripcion: string;
+  idtarea: number;
+  tarea: Tarea;
+
 }
 
 
