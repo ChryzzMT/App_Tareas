@@ -30,7 +30,18 @@ export class SubTareasVer {
     if (state && state['idTarea']) {
       this.idtarea = state['idTarea'];
     }
-    this.cargarsubtareas();
+
+    const usuarioId = localStorage.getItem('usuarioId');
+
+
+    this.api.put(`${this.url}/SetUser?id=${usuarioId}`, {}).subscribe({
+      next: () => {
+        console.log('Usuario configurado con éxito');
+
+        this.cargarsubtareas();
+      },
+      error: error => console.error('Error al establecer usuario:', error)
+    });
   }
 
 
@@ -47,7 +58,7 @@ export class SubTareasVer {
   }
 
   eliminarsubtarea(idsubtarea: number) {
-    this.api.delete(this.url + '/DeleteSubtarea/' + idsubtarea).subscribe({
+    this.api.delete(`${this.url}/DeleteSubtarea?id=${idsubtarea}`).subscribe({
       next: () => this.subtareas = this.subtareas.filter(s => s.idsubtarea !== idsubtarea),
       error: error => console.error('Error al eliminar materia', error)
     });
