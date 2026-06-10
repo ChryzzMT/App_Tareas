@@ -6,7 +6,6 @@ public class GestionImpactoEsfuerzo
     public static List<Tarea> MenorGanancia { get; set; } = new();
     public static List<Tarea> GananciaRapida {get; set;}= new();
     public static List<Tarea> Oportunidades {get; set;}= new();
-    private static bool inicio = false;
     
     private readonly AppDbContext _db;
     public static int userId;
@@ -18,13 +17,8 @@ public class GestionImpactoEsfuerzo
     public GestionImpactoEsfuerzo(AppDbContext db)
     {
         _db = db;
-        if (!inicio)
-        {
-            AsignarTareasEsfuerzo_Impacto();
-            inicio = true;
-        }
     } 
-    public void AsignarTareasEsfuerzo_Impacto()// para que esto funcione el sistema de asignacion de peso se hace con el usuario
+    public void AsignarTareasEsfuerzo_Impacto()
     {//1-3 Descartar la tarea 3-6
         var Tareas= _db.Tareas.Where(u=>u.idUsuario==userId).ToList();
         var Materias = _db.Materias.Where(m => m.IdUsuario == userId).ToList();

@@ -19,6 +19,12 @@ public class GestionImpactoEsfuerzoController: Controller
     {
         gestionImpactoEsfuerzo.SetUserid(id);
     }
+
+    [HttpPut("asignar-impactoesfuerzo")]
+    public void AsignarImpactoEsfuerzo()
+    {
+        gestionImpactoEsfuerzo.AsignarTareasEsfuerzo_Impacto();
+    }
     
     [HttpGet("tareas-oportunidades")]
     public IEnumerable<Tarea> TareasOportunidades()
