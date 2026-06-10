@@ -12,10 +12,10 @@ import { RouterLink, Router } from '@angular/router';
 })
 export class CrearCuenta {
 
-  // 🎯 Asegúrate de que las propiedades coincidan con C# (Mayúsculas/Minúsculas)
+
   Usuario: usuario = {
     idUsuario: 0,
-    nombre: "", // Si en tu interfaz 'usuario' está en minúscula, déjalo así aquí
+    nombre: "",
     email: "",
     contrasena: ""
   };
@@ -23,7 +23,7 @@ export class CrearCuenta {
   errormensaje: string = "";
   private url = 'http://localhost:5056/GestionUsuario/CrearUsuario';
 
-  // Inyectamos el HttpClient nativo de Angular para asegurar el tiro
+
   private http = inject(HttpClient);
 
   constructor(private router: Router) {}
@@ -36,8 +36,7 @@ export class CrearCuenta {
       return;
     }
 
-    // 🎯 Mapeo explícito antes de enviar:
-    // Creamos un objeto con las llaves EXACTAS que tiene tu clase Usuario en C#
+
     const dataParaEnviar = {
       IdUsuario: 0,
       Nombre: this.Usuario.nombre,
@@ -47,13 +46,11 @@ export class CrearCuenta {
 
     console.log("Enviando este JSON al backend:", dataParaEnviar);
 
-    // Hacemos el POST directo con el cliente nativo
     this.http.post<number>(this.url, dataParaEnviar).subscribe({
       next: (idcreado: number) => {
         console.log('Respuesta de .NET (ID creado):', idcreado);
 
         if (idcreado > 0) {
-          // Éxito: Nos movemos al login
           this.router.navigate(['/login']);
         } else {
           this.errormensaje = "Hubo un problema. El backend devolvió ID 0.";

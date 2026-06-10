@@ -7,7 +7,7 @@ import { Router } from '@angular/router';
 import {Tarea} from '../Tareas/tareas';
 
 @Component({
-  selector: 'app-materias',
+  selector: 'app-SubTareasVer',
   imports: [RouterLink],
   templateUrl: './subTareasVer.html',
 })
