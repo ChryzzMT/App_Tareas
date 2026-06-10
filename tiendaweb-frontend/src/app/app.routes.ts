@@ -8,6 +8,7 @@ import {MateriaEdicion} from'./Materias/materia-edicion'
 import { Calendario } from './Calendario/calendario';
 // import {Subtarea} from './SubTareas/Subtarea';
 import {SubTareasVer} from './SubTareas/subTareasVer';
+import {Mostrarmatriz} from './Matriz/mostrarmatriz';
 
 export const routes: Routes = [
   { path: '', redirectTo: 'login', pathMatch: 'full' },
@@ -18,5 +19,8 @@ export const routes: Routes = [
   { path: 'materias', component: ListaMaterias },
   {path: 'materias/editar', component:MateriaEdicion},
   { path: 'calendario', component: Calendario },
-  { path: 'subtareas' , component: SubTareasVer}
+  { path: 'subtareas' , component: SubTareasVer},
+  {
+    path : 'matriz'  ,  component : Mostrarmatriz
+  }
 ];

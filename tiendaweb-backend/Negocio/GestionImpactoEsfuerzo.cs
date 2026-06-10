@@ -9,7 +9,12 @@ public class GestionImpactoEsfuerzo
     private static bool inicio = false;
     
     private readonly AppDbContext _db;
-    private static int userId=1;
+    public static int userId;
+
+    public void SetUserid( int id)
+    {
+        userId = id;
+    }
     public GestionImpactoEsfuerzo(AppDbContext db)
     {
         _db = db;

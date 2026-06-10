@@ -3,6 +3,8 @@ using tiendaweb_backend.Datos;
 
 namespace tiendaweb_backend.Controllers;
 
+[ApiController]
+[Route("[controller]")]
 public class GestionImpactoEsfuerzoController: Controller
 {
     private GestionImpactoEsfuerzo gestionImpactoEsfuerzo;
@@ -10,6 +12,12 @@ public class GestionImpactoEsfuerzoController: Controller
     public GestionImpactoEsfuerzoController(AppDbContext db)
     {
         gestionImpactoEsfuerzo = new GestionImpactoEsfuerzo(db);
+    }
+
+    [HttpPut("SetUser")]
+    public void SetUserid( [FromQuery]int id)
+    {
+        gestionImpactoEsfuerzo.SetUserid(id);
     }
     
     [HttpGet("tareas-oportunidades")]
@@ -28,8 +36,8 @@ public class GestionImpactoEsfuerzoController: Controller
         return GestionImpactoEsfuerzo.MenorGanancia;
     }
 
-    [HttpGet("tareas-minimgan")]
-    public IEnumerable<Tarea> TareasMinimaGanancia()
+    [HttpGet("tareas-descartar")] // descartar
+    public IEnumerable<Tarea> TareasDescartar()
     {
         return GestionImpactoEsfuerzo.MinimaGanancia;
     }
