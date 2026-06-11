@@ -1,3 +1,4 @@
+using Microsoft.EntityFrameworkCore;
 using tiendaweb_backend.Datos;
 
 namespace tiendaweb_backend.Negocio;
@@ -43,6 +44,16 @@ public class GestionMaterias
     public void EliminarMateria(string nombre)
     {
         var materia = _db.Materias.FirstOrDefault(m => m.NombreMateria == nombre);
+        var tareas = _db.Tareas.ToList();
+        GestionTareas gestionTareas = new GestionTareas(_db);
+        for (int i = 0; i < tareas.Count; i++)
+        {
+            if (materia.IdMateria == tareas[i].idMateria)
+            {
+                gestionTareas.EliminarTarea(tareas[i].Titulo);
+            }
+        }
+        
         if (materia != null)
         {
             _db.Materias.Remove(materia);
