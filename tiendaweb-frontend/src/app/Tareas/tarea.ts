@@ -6,7 +6,6 @@ import { Router } from '@angular/router';
 import { Materia } from '../Materias/materia';
 import {Tarea} from './tareas';
 import {MateriaEdicion} from '../Materias/materia-edicion';
-import {TYPED_NULL_EXPR} from '@angular/compiler';
 
 @Component({
   selector: 'app-tarea',
@@ -26,7 +25,7 @@ export class TareaEdicion {
     descripcion:'',
     fechaEntrega:'',
     idMateria:0,
-    materia:TYPED_NULL_EXPR
+    materia: null!
   }
 
   guardar() {
@@ -67,5 +66,4 @@ export class TareaEdicion {
       }
     });
   }
-
 }

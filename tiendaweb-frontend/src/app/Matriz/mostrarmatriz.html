@@ -7,6 +7,10 @@
     <div class="col-3">
       <div class="p-3 bg-light border" style="margin: 6px"> {{Tarea.titulo}}</div>
     </div>
+  }  @empty {
+    <div class="col-3">
+      <div class="p-3 bg-light border">No hay tareas</div>
+    </div>
   }
 
 <div class="col-6"><h2 style="justify-content: center; margin: 7px">Ganancia Rapida</h2> </div>
@@ -14,12 +18,20 @@
   <div class="col-3">
     <div class="p-3 bg-light border" style="margin: 6px"> {{Tarea.titulo}}</div>
   </div>
+} @empty {
+  <div class="col-3">
+    <div class="p-3 bg-light border">No hay tareas</div>
+  </div>
 }
 
 <div class="col-6"><h2 style="justify-content: center; margin: 7px">Menor Ganancia</h2> </div>
 @for (Tarea of ListaGananciasMinimas ;track Tarea.idTarea){
   <div class="col-3">
     <div class="p-3 bg-light border" style="margin: 6px"> {{Tarea.titulo}}</div>
+  </div>
+} @empty {
+  <div class="col-3">
+    <div class="p-3 bg-light border">No hay tareas</div>
   </div>
 }
 

@@ -7,8 +7,6 @@ import { Materia } from '../Materias/materia'
 import{ SubTareasVer} from '../SubTareas/subTareasVer';
 // import {Subtarea} from '../SubTareas/Subtarea';
 
-
-
 @Component({
   selector: 'app-tareas',
   imports: [RouterLink, CommonModule],
@@ -19,7 +17,6 @@ export class Tareas {
   private url = 'http://localhost:5056/GestionTareas';
 
   tareas: Tarea[] = [];
-
 
   ngOnInit() {
     const usuarioId = localStorage.getItem('usuarioId');
@@ -46,8 +43,9 @@ export class Tareas {
   editar(tarea: Tarea) {
     this.router.navigate(['/tarea'], { state: { tarea } });
   }
+
   verSubtareas(tarea: Tarea) {
-    this.router.navigate(['/subtareas'], { state: { idTarea: tarea.idTarea } });
+    this.router.navigate(['/subtareas'], { state: { tarea } });
   }
 
   protected readonly SubTareasVer = SubTareasVer;

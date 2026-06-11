@@ -5,6 +5,7 @@ import { FormsModule } from '@angular/forms';
 import { Router } from '@angular/router';
 // import { Subtarea } from './Subtarea';
 import {Tarea} from '../Tareas/tareas';
+import {Materia} from '../Materias/materia';
 
 @Component({
   selector: 'app-SubTareasVer',
@@ -23,12 +24,21 @@ export class SubTareasVer {
 
   subtareas: Subtarea1[] = []
 
-  idtarea: number = 0;
+  tarea: Tarea = {
+    idTarea: 0,
+    titulo: '',
+    descripcion: '',
+    pesoTarea: 0,
+    fechaEntrega: '',
+    estado: '',
+    idMateria: 0,
+    materia: null!
+  }
 
   ngOnInit() {
     const state = history.state;
-    if (state && state['idTarea']) {
-      this.idtarea = state['idTarea'];
+    if (state && state['tarea']) {
+      this.tarea = state['tarea'];
     }
 
     const usuarioId = localStorage.getItem('usuarioId');
@@ -36,7 +46,7 @@ export class SubTareasVer {
 
     this.api.put(`${this.url}/SetUser?id=${usuarioId}`, {}).subscribe({
       next: () => {
-        console.log('Usuario configurado con éxito');
+        console.log('Usuario configurado con exito');
 
         this.cargarsubtareas();
       },
@@ -44,17 +54,19 @@ export class SubTareasVer {
     });
   }
 
-
-
   cargarsubtareas() {
     // Concatenamos '?idtarea=' antes del ID para que coincida con el backend
-    this.api.get<Subtarea1[]>(`${this.url}/ListarSubtareas?idtarea=${this.idtarea}`).subscribe({
+    this.api.get<Subtarea1[]>(`${this.url}/ListarSubtareas?idtarea=${this.tarea.idTarea}`).subscribe({
       next: data => {
         this.subtareas = data;
         console.log('Subtareas cargadas:', data);
       },
       error: error => console.error('Error al obtener subtareas', error)
     });
+  }
+
+  cargarcrearsubtarea() {
+    this.router.navigate(['/subtarea/crear'], { state: { tarea: this.tarea } });
   }
 
   eliminarsubtarea(idsubtarea: number) {

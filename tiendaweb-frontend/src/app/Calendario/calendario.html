@@ -20,6 +20,16 @@
       <div style="width: 14.28%; min-height: 100px;"></div>
     }
     @for (dia of dias; track dia.dia) {
+      @if(dia.dia == yo && mesActual == mesHoy) {
+        <div class="border p-2" style="width: 14.28%; min-height: 100px; background-color: lightgreen">
+          <div class="fw-bold mb-1">{{ dia.dia }}</div>
+          @for (tarea of dia.listaTareaDia; track tarea.idTarea) {
+            <div class="badge bg-primary text-wrap text-start w-100 mb-1" style="font-size: 0.7rem;">
+              {{ tarea.titulo }}
+            </div>
+          }
+        </div>
+      } @else {
       <div class="border p-2" style="width: 14.28%; min-height: 100px;">
         <div class="fw-bold mb-1">{{ dia.dia }}</div>
         @for (tarea of dia.listaTareaDia; track tarea.idTarea) {
@@ -28,6 +38,7 @@
           </div>
         }
       </div>
+      }
     }
   </div>
 </div>

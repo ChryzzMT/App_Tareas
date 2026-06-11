@@ -14,7 +14,8 @@ export class Calendario {
 
   mesActual = new Date().getMonth() + 1;
   anioActual = new Date().getFullYear();
-
+  yo = new Date().getDate();
+  mesHoy = new Date().getMonth() + 1;
   dias: any[] = [];
   diasVacios: number[] = [];
 
@@ -39,7 +40,7 @@ export class Calendario {
       next: data => {
         this.dias = data.listaDias;
         const primerDia = this.dias[0]?.diadelsemana;
-        const offset = primerDia === 0 ? 6 : primerDia - 1; // Lunes = 0
+        const offset = primerDia === 0 ? 6 : primerDia - 1;
         this.diasVacios = Array(offset).fill(0);
       },
       error: error => console.error('Error al cargar mes', error)
