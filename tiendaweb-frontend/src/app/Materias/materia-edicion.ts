@@ -31,7 +31,7 @@ export class MateriaEdicion {
 
   ngOnInit() {
     const state = history.state;
-    if (state && state['materia']) {
+    if (state && state['materia']) {//aqui recibe la materia que se envio de lista-materias.editar
       this.materia = state['materia'];
       this.esEdicion = true;
     }
@@ -48,7 +48,7 @@ export class MateriaEdicion {
 
   crear() {
     this.backendApi.post<Materia>(this.url+'/agregar-materia',this.materia).subscribe({
-      next: () => this.router.navigate(['/materias']),
+      next: () => this.router.navigate(['/materias']),//esto this.router.navigate(['/materias'] solo recarga la pagina
       error: error => console.error('Error al crear materia', error)
     });
   }

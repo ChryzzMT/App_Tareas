@@ -1,11 +1,13 @@
+using System.ComponentModel.DataAnnotations;
+
 namespace tiendaweb_backend.Datos;
 
 public class GestionImpactoEsfuerzo
 {
-    public static List<Tarea> MinimaGanancia { get; set; } = new();
-    public static List<Tarea> MenorGanancia { get; set; } = new();
-    public static List<Tarea> GananciaRapida {get; set;}= new();
-    public static List<Tarea> Oportunidades {get; set;}= new();
+    public static List<Tarea> MinimaGanancia { get; set; }
+    public static List<Tarea> MenorGanancia { get; set; } 
+    public static List<Tarea> GananciaRapida {get; set;}
+    public static List<Tarea> Oportunidades {get; set;}
     
     private readonly AppDbContext _db;
     public static int userId;
@@ -20,6 +22,11 @@ public class GestionImpactoEsfuerzo
     } 
     public void AsignarTareasEsfuerzo_Impacto()
     {//1-3 Descartar la tarea 3-6
+        MinimaGanancia = new List<Tarea>();
+        MenorGanancia = new List<Tarea>();
+        GananciaRapida = new List<Tarea>();
+        Oportunidades = new List<Tarea>();
+    
         var Tareas= _db.Tareas.Where(u=>u.idUsuario==userId).ToList();
         var Materias = _db.Materias.Where(m => m.IdUsuario == userId).ToList();
         for (int i = 0; i < Tareas.Count; i++)

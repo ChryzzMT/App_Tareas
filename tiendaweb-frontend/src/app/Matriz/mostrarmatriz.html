@@ -1,42 +1,38 @@
-<h1 class="text-center" style="border: aqua" > Impacto Esfuerzo </h1>
+<h1 class="text-center" style="border: aqua" routerLink="/matriz"> Impacto Esfuerzo </h1>
+<button class="btn btn-primary" (click)="CargarEsfuerzoImpacto()">Asignar</button>
+<br>
 
+<div class="col-6"><h2 style="justify-content: center; margin: 7px">Oportunidades</h2> </div>
+  @for (Tarea of ListaOportunidades ;track Tarea.idTarea){
+    <div class="col-3">
+      <div class="p-3 bg-light border" style="margin: 6px"> {{Tarea.titulo}}</div>
+    </div>
+  }
 
-<div style="display: flex">
-<div class="col-6"><h2 class="text-center">   Oportunidades </h2> </div>
-<div class="col-6"> <h2 class="text-center"> Ganancias Rapidas</h2> </div>
-</div>
-
-
-@for (Tarea of ListaOportunidades ;track Tarea.idTarea){
-<div class="row text-center g-3"> <div class="col-3">
-    <div class="p-3 bg-light border"> {{Tarea.titulo}}</div>
-</div>
-
-</div>
+<div class="col-6"><h2 style="justify-content: center; margin: 7px">Ganancia Rapida</h2> </div>
+@for (Tarea of ListaGananciasRapidas ;track Tarea.idTarea){
+  <div class="col-3">
+    <div class="p-3 bg-light border" style="margin: 6px"> {{Tarea.titulo}}</div>
+  </div>
 }
 
-
-
-<div style="display: flex">
-  <div class="col-6"><h2 class="text-center">   Minimas Ganancias </h2> </div>
-  <div class="col-6"> <h2 class="text-center"> Minimas Oportunidades</h2> </div>
-</div>
-
-
-<div class="row text-center g-3"> <div class="col-3">
-  <div class="p-3 bg-light border">.col-6</div>
-</div>
+<div class="col-6"><h2 style="justify-content: center; margin: 7px">Menor Ganancia</h2> </div>
+@for (Tarea of ListaGananciasMinimas ;track Tarea.idTarea){
   <div class="col-3">
-    <div class="p-3 bg-light border">.col-6</div>
+    <div class="p-3 bg-light border" style="margin: 6px"> {{Tarea.titulo}}</div>
   </div>
-  <div class="col-3">
-    <div class="p-3 bg-light border">.col-6</div>
-  </div>
-  <div class="col-3">
-    <div class="p-3 bg-light border">.col-6</div>
-  </div>
-</div>
+}
 
+<div class="col-6"><h2 style="justify-content: center; margin: 7px">Descartar</h2> </div>
+@for (Tarea of ListaDescartar ;track Tarea.idTarea){
+  <div class="col-3">
+    <div class="p-3 bg-light border" style="margin: 6px"> {{Tarea.titulo}}</div>
+  </div>
+} @empty {
+  <div class="col-3">
+    <div class="p-3 bg-light border">No hay tareas</div>
+  </div>
+}
 
 
 

@@ -38,7 +38,6 @@ export class Calendario {
     this.api.get<any>(this.url + '/ObtenerDiasdeunMes?year=' + this.anioActual + '&mes=' + this.mesActual).subscribe({
       next: data => {
         this.dias = data.listaDias;
-        // Calcular días vacíos al inicio del mes.
         const primerDia = this.dias[0]?.diadelsemana;
         const offset = primerDia === 0 ? 6 : primerDia - 1; // Lunes = 0
         this.diasVacios = Array(offset).fill(0);

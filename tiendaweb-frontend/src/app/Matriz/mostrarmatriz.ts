@@ -1,11 +1,12 @@
 import {Component, inject} from '@angular/core';
 import {FormsModule} from '@angular/forms';
 import {ApiClient} from '../core/http/api-client';
-import {RouterLink, Router, ActivatedRoute} from '@angular/router';
+import {ActivatedRoute, Router, RouterLink} from '@angular/router';
 import {Tarea} from '../Tareas/tareas';
 
 @Component({
   selector: 'app-mostrarmatriz',
+  standalone:true,
   imports: [RouterLink,FormsModule],
   templateUrl: './mostrarmatriz.html',
 })
@@ -18,24 +19,31 @@ export class Mostrarmatriz {
   ListaOportunidades : Tarea [] = []
   ListaGananciasRapidas : Tarea [] = []
   ListaGananciasMinimas : Tarea [] = []
+  private router = inject(Router);
 
   ngOnInit() {
     const userid = localStorage.getItem('usuarioId');
 
-    // Mandamos por parámetro tradicional: .../GestionImpactoEsfuerzo/SetUserid?id=1
     this.api.put(`${this.url}/SetUser?id=${userid}`, {}).subscribe({
-      next : () => {
-        console.log("Matriz inicializada correctamente para el usuario:", userid);
-        this.CargarListaDescartar();
-        this.CargarListaGananciasRapidas();
-        this.CargarListaGanananciasmenores();
-        this.CargarListaOportunidades();
-      },
-      error: error => console.error("Error al inicializar usuario en la matriz", error)
+      next: () => {
+        this.api.put(this.url + '/asignar-impactoesfuerzo', {}).subscribe({
+          next: () => {
+            this.CargarListaDescartar();
+            this.CargarListaGananciasRapidas();
+            this.CargarListaGanananciasmenores();
+            this.CargarListaOportunidades();
+          }
+        });
+      }
     });
   }
 
-
+CargarEsfuerzoImpacto(){
+    this.api.put(this.url+'/asignar-impactoesfuerzo',{}).subscribe({
+      next : () =>this.router.navigate(['/matriz']),
+      error:error => console.error(error)
+    });
+}
 
 
   CargarListaDescartar(){

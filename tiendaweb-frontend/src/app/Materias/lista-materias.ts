@@ -28,7 +28,7 @@ export class ListaMaterias {
 
   eliminar(nombre: string) {
     this.api.delete(this.url + '/eliminar-materia/' + nombre).subscribe({
-      next: () => this.materias = this.materias.filter(m => m.nombreMateria !== nombre),
+      next:() => this.materias = this.materias.filter(m => m.nombreMateria !== nombre),
       error: error => console.error('Error al eliminar materia', error)
     });
   }
