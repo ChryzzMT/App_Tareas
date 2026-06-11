@@ -34,9 +34,10 @@ public class GestionTareas
 
     public void EliminarTarea(string titu)
     {
-        var tarea = _db.Tareas.FirstOrDefault(t => t.Titulo == titu);
+        var tarea = _db.Tareas.FirstOrDefault(t => t.Titulo == titu && t.idUsuario==_idenuser);
         var subtareas = _db.Subtareas.ToList();
         GestionSubtareas gestionSubtareas = new GestionSubtareas(_db);
+        gestionSubtareas.SetUser(_idenuser);
         for (int i = 0; i < subtareas.Count; i++)
         {
             if (tarea.IdTarea == subtareas[i].idtarea)

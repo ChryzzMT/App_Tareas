@@ -51,5 +51,11 @@ public class GestionNotificaciones
             );
         }
     }
+
+    public void eliminarNotificacion(int idTarea)
+    {
+
+        _db.Notificaciones.ToList();
+    }
     
 }

@@ -43,9 +43,10 @@ public class GestionMaterias
 
     public void EliminarMateria(string nombre)
     {
-        var materia = _db.Materias.FirstOrDefault(m => m.NombreMateria == nombre);
+        var materia = _db.Materias.FirstOrDefault(m => m.NombreMateria == nombre && m.IdUsuario == user);
         var tareas = _db.Tareas.ToList();
         GestionTareas gestionTareas = new GestionTareas(_db);
+        gestionTareas.SetUsuario(user);
         for (int i = 0; i < tareas.Count; i++)
         {
             if (materia.IdMateria == tareas[i].idMateria)
