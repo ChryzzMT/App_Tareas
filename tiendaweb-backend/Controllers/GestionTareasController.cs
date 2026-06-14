@@ -93,4 +93,17 @@ public class GestionTareasController : Controller
     {
         return gestionTareas.MostrarTareasTerminadas();
     }
+
+    [HttpPut("MarcarVencida")]
+    public void MarcarVencida(int tareaid)
+    {
+        gestionTareas.MarcarVencidad(tareaid);
+    }
+
+    [HttpGet("traertareaspasadas")]
+
+    public List<Tarea> Traertareaspasadas()
+    {
+        return gestionTareas.MostrarTareasPasadas();
+    }
 }

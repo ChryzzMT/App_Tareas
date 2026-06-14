@@ -1,4 +1,5 @@
 using System.ComponentModel.DataAnnotations;
+using System.Runtime.InteropServices.JavaScript;
 
 namespace tiendaweb_backend.Datos;
 
@@ -26,11 +27,13 @@ public class GestionImpactoEsfuerzo
         MenorGanancia = new List<Tarea>();
         GananciaRapida = new List<Tarea>();
         Oportunidades = new List<Tarea>();
-    
-        var Tareas= _db.Tareas.Where(u=>u.idUsuario==userId).ToList();
+
+        var fechahoydia =  DateTime.Today;
+        var Tareas= _db.Tareas.Where(u=>u.idUsuario==userId && (u.Estado.ToLower() !="completada" && u.Estado.ToLower() !="vencida")   && u.FechaEntrega > fechahoydia ).ToList();
         var Materias = _db.Materias.Where(m => m.IdUsuario == userId).ToList();
         for (int i = 0; i < Tareas.Count; i++)
         {
+            bool asignada = false;
             for (int j = 0; j < Materias.Count; j++)
             {
                 if (Tareas[i].idMateria == Materias[j].IdMateria)
@@ -40,26 +43,36 @@ public class GestionImpactoEsfuerzo
                         if (Tareas[i].PesoTarea <= 3)
                         {
                             Oportunidades.Add(Tareas[i]);
+                            asignada = true;
                         } else if (Tareas[i].PesoTarea >=5)
                         {
                             GananciaRapida.Add(Tareas[i]);
+                            asignada = true;
                         }
                     }else if (Materias[j].PrioridadMateria >= 4)//si la prioridad es mayor o igual a 4 es media
                     {
                         if (Tareas[i].PesoTarea >=5)//tareas muy pesadas y con una prioridad media van a ganacia rapida
                         {
                             GananciaRapida.Add(Tareas[i]);
+                            asignada = true;
                         }else if (Tareas[i].PesoTarea == 2|| Tareas[i].PesoTarea==3)//tareas con esfuerzo bajo y prioridad media van a menor ganancia 
                         {
                             MenorGanancia.Add(Tareas[i]);
+                            asignada = true;
                         }
                     }else if (Materias[j].PrioridadMateria >= 1)//si la prioridad es mayor o igual 1 es baja
                     {
                         if (Tareas[i].PesoTarea >= 5)// tareas con baja prioridad y mucho esfuerzo van a minimaGanancia
                         {
                             MinimaGanancia.Add(Tareas[i]);
+                            asignada = true;
                         }
                         
+                    }
+
+                    if (!asignada)
+                    {
+                        MinimaGanancia.Add(Tareas[i]);
                     }
                     
                 }

@@ -22,7 +22,9 @@ public class GestionTareas
 
     public List<Tarea> ListarTareas()
     {
-        return _db.Tareas.Include(t => t.Materia).Where(p => p.idUsuario == _idenuser && p.Estado.ToLower() != "completada").ToList();
+        return _db.Tareas.Include(t => t.Materia).Where(p => p.idUsuario == _idenuser && p.Estado.ToLower() != "completada" &&
+                                                             p.Estado.ToLower() != "vencida" && 
+                                                             p.FechaEntrega > DateTime.Now ).ToList();
     }
 
     public void AgregarTarea(Tarea tarea)
@@ -118,7 +120,7 @@ public class GestionTareas
 
     public List<Tarea> MostrarTareasPasadas()
     {
-        var tareaspasadas = _db.Tareas.Where(t => t.idUsuario == _idenuser && t.Estado.ToLower() != "completada"
+        var tareaspasadas = _db.Tareas.Where(t => t.idUsuario == _idenuser && t.Estado.ToLower() == "vencida" || t.Estado.ToLower() == "completada"
                                                                            && t.FechaEntrega < DateTime.Now);
 
         return tareaspasadas.OrderByDescending(t => t.FechaEntrega)
@@ -167,9 +169,12 @@ public class GestionTareas
             var  tarea =  _db.Tareas.FirstOrDefault(t => t.IdTarea == idtarea && t.idUsuario == _idenuser)!; 
             
             if (tarea == null) return;
-            if (tarea.Estado.ToLower() == "completada") // deshacer si la tarea ya estaba en completada
+            if (tarea.Estado.ToLower() == "completada" || tarea.Estado.ToLower() =="vencida") // deshacer si la tarea ya estaba en completada
             {
                 tarea.Estado = "Pendiente";
+                DateTime fechanueva = DateTime.Today.AddDays(5);
+                tarea.FechaEntrega = fechanueva ;
+             
             }
             else
             {
@@ -179,6 +184,14 @@ public class GestionTareas
 
             _db.SaveChanges();
 
+        }
+
+        public void MarcarVencidad(int idtarea)
+        {
+            var tarea = _db.Tareas.FirstOrDefault(t => t.IdTarea == idtarea && t.idUsuario == _idenuser)!; 
+            if (tarea == null) return;
+            tarea.Estado = "Vencida";
+            _db.SaveChanges();
         }
         
         

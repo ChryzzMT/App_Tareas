@@ -36,6 +36,15 @@ export class Tareas {
           error: error => console.error('Error al obtener tareas completadas', error)
         })
 
+        this.api.get<Tarea[]>(this.url +'/traertareaspasadas').subscribe({
+          next: data =>{ this.tareasDesfasadas = data
+
+
+          } ,
+
+          error: error => console.error('Error al obtener tareas pasadas', error)
+        })
+
 
 
       }
@@ -66,19 +75,30 @@ export class Tareas {
     })
   }
 
+
+
   VerificarTareasTiempo():void{
 
     var fechahoy =  Date.now();
 
-    for(let i =this.tareas.length-1;i>=0; i--){
+    for(let i =0;i<this.tareas.length; i++){
       var objeto = this.tareas[i];
       var fechaentregaobj = new Date(objeto.fechaEntrega).getTime();
-      if(fechaentregaobj < fechahoy && objeto.estado.toLowerCase() !="completada"){
-        objeto.estado="Vencida";
+      if(fechaentregaobj < fechahoy){
+        this.marcarvencidad(objeto.idTarea);
+
+        objeto.estado = "Vencida";
         this.tareasDesfasadas.push(objeto);
         this.tareas.splice(i,1);
       }
     }
+}
+
+marcarvencidad(tareaid : number){
+
+    this.api.put(`${this.url}/MarcarVencidad?tareaid=${tareaid}` , {} ).subscribe({
+      error: error => console.error('Error al marcarVencidad', error)
+    })
 }
 
 
