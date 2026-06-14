@@ -17,6 +17,8 @@ export class Tareas {
   private url = 'http://localhost:5056/GestionTareas';
 
   tareas: Tarea[] = [];
+  tareascompletadas:Tarea[] = [];
+  tareasDesfasadas:Tarea[] = [];
 
   ngOnInit() {
     const usuarioId = localStorage.getItem('usuarioId');
@@ -24,9 +26,18 @@ export class Tareas {
     this.api.post(this.url + '/SETUSUARIO?usuario=' + usuarioId, {}).subscribe({
       next: () => {
         this.api.get<Tarea[]>(this.url + '/Listar-Tareas').subscribe({
-          next: data => this.tareas = data,
+          next: data =>{ this.tareas = data
+            this.VerificarTareasTiempo();
+          },
           error: error => console.error('Error al obtener tareas', error)
         });
+        this.api.get<Tarea[]>(this.url + '/ConseguirTareasCompletadas').subscribe({
+          next: data => this.tareascompletadas = data,
+          error: error => console.error('Error al obtener tareas completadas', error)
+        })
+
+
+
       }
     });
   }
@@ -48,7 +59,30 @@ export class Tareas {
     this.router.navigate(['/subtareas'], { state: { tarea } });
   }
 
-  protected readonly SubTareasVer = SubTareasVer;
+  MarcarCompletada( tareaid : number):void {
+    this.api.put(`${this.url}/MarcarCompletado?tareaid=${tareaid}` , {} ).subscribe({
+      next : () => this.ngOnInit(),
+      error: error => console.error('Error al completar la  tarea', error)
+    })
+  }
+
+  VerificarTareasTiempo():void{
+
+    var fechahoy =  Date.now();
+
+    for(let i =this.tareas.length-1;i>=0; i--){
+      var objeto = this.tareas[i];
+      var fechaentregaobj = new Date(objeto.fechaEntrega).getTime();
+      if(fechaentregaobj < fechahoy && objeto.estado.toLowerCase() !="completada"){
+        objeto.estado="Vencida";
+        this.tareasDesfasadas.push(objeto);
+        this.tareas.splice(i,1);
+      }
+    }
+}
+
+
+  // protected readonly SubTareasVer = SubTareasVer;
 }
 
 export interface Tarea {
@@ -56,7 +90,7 @@ export interface Tarea {
   titulo: string;
   descripcion: string;
   pesoTarea: number;
-  fechaEntrega:string;
+  fechaEntrega:string ;
   estado: string;
   idMateria: number;
   materia: Materia;

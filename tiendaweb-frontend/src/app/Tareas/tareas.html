@@ -2,7 +2,7 @@
   <div class = "row justify-content-center">
     <div class = "col-md-10">
 
-      <h1> Tarea </h1>
+      <h1> Tarea Pendientes </h1>
       <br/>
       <button class = "btn btn-primary" routerLink = "/tarea"> Nueva Tarea </button>
       <br/>
@@ -33,6 +33,7 @@
                   <button class="btn btn-outline-success btn-sm" (click)="verSubtareas(tarea)" routerLink="/subtareas" >VerSubtarea </button>
                   <button class="btn btn-outline-primary btn-sm" (click)="editar(tarea)">Editar</button>
                   <button class="btn btn-outline-danger btn-sm" (click)="eliminar(tarea.titulo)">Eliminar</button>
+                  <button class="btn btn-outline-warning"  (click)="MarcarCompletada(tarea.idTarea)" >  Completada? </button>
                 </div>
               </td>
             </tr>
@@ -43,3 +44,132 @@
     </div>
   </div>
 </div>
+
+
+<div class="container">
+
+
+  <div class="row justify-content-center">
+
+    <div class=" col-md-10">
+
+      <h2> Tareas Completadas</h2>
+
+
+
+  @if(tareascompletadas.length == 0){
+
+    <div  colspan="6" class="justify-content-center" style="text-align: center; vertical-align: middle; outline-style: solid ; outline-color: lawngreen" >
+      No hay Tareas Terminadas en este momento
+    </div>
+
+  }
+  @else{
+
+  <table class="table table-hover" style="border-color: lawngreen">
+
+    <thead>
+    <tr>
+      <th scope = "col"> Titulo </th>
+      <th scope = "col"> Descripcion </th>
+      <th scope = "col"> Peso Tarea </th>
+      <th scope = "col"> Fecha de Entrega </th>
+      <th scope = "col"> Estado </th>
+      <th scope = "col"> Materia </th>
+    </tr>
+    </thead>
+    <tbody class="table-group-divider" style="border-color: lawngreen">
+
+    @for(com of tareascompletadas ; track com.idTarea){
+      <tr>
+        <td>{{ com.titulo }}</td>
+        <td>{{ com.descripcion }}</td>
+        <td>{{ com.pesoTarea }}</td>
+        <td>{{ com.fechaEntrega }}</td>
+        <td>{{ com.estado }}</td>
+        <td>{{ com.materia?.nombreMateria }}</td>
+        <td>
+          <div class="btn-group" role="group">
+            <button class="btn btn-outline-success btn-sm" (click)="verSubtareas(com)" routerLink="/subtareas" >VerSubtarea </button>
+            <button class="btn btn-outline-primary btn-sm" (click)="editar(com)">Editar</button>
+            <button class="btn btn-outline-danger btn-sm" (click)="eliminar(com.titulo)">Eliminar</button>
+            <button class="btn btn-outline-warning"  (click)="MarcarCompletada(com.idTarea)" >  No se ha Completado? </button>
+          </div>
+        </td>
+      </tr>
+    }
+    </tbody>
+
+  </table>
+  }
+    </div>
+  </div>
+</div>
+
+
+
+
+
+<div class="container" >
+
+
+  <div class="row justify-content-center">
+
+    <div class=" col-md-10">
+
+      <h2> Tareas Desfasadas</h2>
+
+@if(tareasDesfasadas.length == 0){
+
+  <div  colspan="6" class="justify-content-center" style="text-align: center; vertical-align: middle; outline-style: solid ; outline-color: red" >
+    No hay Tareas Desfasadas en este momento
+  </div>
+
+}
+@else{
+
+  <table class="table table-hover"  style="border-color: red">
+
+    <thead>
+    <tr>
+      <th scope = "col"> Titulo </th>
+      <th scope = "col"> Descripcion </th>
+      <th scope = "col"> Peso Tarea </th>
+      <th scope = "col"> Fecha de Entrega </th>
+      <th scope = "col"> Estado </th>
+      <th scope = "col"> Materia </th>
+    </tr>
+    </thead>
+    <tbody class="table-group-divider" style="border-color: red">
+
+      @for(com of tareasDesfasadas ; track com.idTarea){
+        <tr>
+          <td>{{ com.titulo }}</td>
+          <td>{{ com.descripcion }}</td>
+          <td>{{ com.pesoTarea }}</td>
+          <td>{{ com.fechaEntrega }}</td>
+          <td>{{ com.estado }}</td>
+          <td>{{ com.materia?.nombreMateria }}</td>
+          <td>
+            <div class="btn-group" role="group">
+              <button class="btn btn-outline-success btn-sm" (click)="verSubtareas(com)" routerLink="/subtareas" >VerSubtarea </button>
+              <button class="btn btn-outline-primary btn-sm" (click)="editar(com)">Editar</button>
+              <button class="btn btn-outline-danger btn-sm" (click)="eliminar(com.titulo)">Eliminar</button>
+              <button class="btn btn-outline-warning"  (click)="MarcarCompletada(com.idTarea)" >  cambiar a Pendiente </button>
+            </div>
+          </td>
+        </tr>
+      }
+    </tbody>
+
+  </table>
+}
+</div>
+</div>
+</div>
+
+
+
+
+
+

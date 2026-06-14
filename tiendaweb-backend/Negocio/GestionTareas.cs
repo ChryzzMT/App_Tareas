@@ -22,7 +22,7 @@ public class GestionTareas
 
     public List<Tarea> ListarTareas()
     {
-        return _db.Tareas.Include(t => t.Materia).Where(p => p.idUsuario == _idenuser).ToList();
+        return _db.Tareas.Include(t => t.Materia).Where(p => p.idUsuario == _idenuser && p.Estado.ToLower() != "completada").ToList();
     }
 
     public void AgregarTarea(Tarea tarea)
@@ -161,4 +161,25 @@ public class GestionTareas
         
             return recomendacion;
         }
+
+         public  void MarcarCompletado(int idtarea)
+        {
+            var  tarea =  _db.Tareas.FirstOrDefault(t => t.IdTarea == idtarea && t.idUsuario == _idenuser)!; 
+            
+            if (tarea == null) return;
+            if (tarea.Estado.ToLower() == "completada") // deshacer si la tarea ya estaba en completada
+            {
+                tarea.Estado = "Pendiente";
+            }
+            else
+            {
+
+                tarea?.Estado = "Completada";
+            }
+
+            _db.SaveChanges();
+
+        }
+        
+        
 }

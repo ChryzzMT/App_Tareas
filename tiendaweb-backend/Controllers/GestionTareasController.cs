@@ -81,4 +81,16 @@ public class GestionTareasController : Controller
     {
         return gestionTareas.Recomendacion();
     }
+
+    [HttpPut("MarcarCompletado")]
+    public void MarcarCompletado(int tareaid)
+    {
+        gestionTareas.MarcarCompletado(tareaid);
+    }
+
+    [HttpGet("ConseguirTareasCompletadas")]
+    public List<Tarea> ConseguirTareasCompletadas()
+    {
+        return gestionTareas.MostrarTareasTerminadas();
+    }
 }
