@@ -120,8 +120,9 @@ public class GestionTareas
 
     public List<Tarea> MostrarTareasPasadas()
     {
-        var tareaspasadas = _db.Tareas.Where(t => t.idUsuario == _idenuser && t.Estado.ToLower() == "vencida" || t.Estado.ToLower() == "completada"
-                                                                           && t.FechaEntrega < DateTime.Now);
+        
+        var tareaspasadas = _db.Tareas.Where(t => t.idUsuario == _idenuser 
+                                                  && (t.Estado.ToLower() == "vencida" || (t.Estado.ToLower() == "pendiente" && t.FechaEntrega < DateTime.Now)));
 
         return tareaspasadas.OrderByDescending(t => t.FechaEntrega)
             .ToList();

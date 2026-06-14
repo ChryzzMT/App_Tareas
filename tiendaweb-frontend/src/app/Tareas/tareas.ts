@@ -84,7 +84,7 @@ export class Tareas {
     for(let i =0;i<this.tareas.length; i++){
       var objeto = this.tareas[i];
       var fechaentregaobj = new Date(objeto.fechaEntrega).getTime();
-      if(fechaentregaobj < fechahoy){
+      if(fechaentregaobj < fechahoy && objeto.estado.toLowerCase() !="completada"){
         this.marcarvencidad(objeto.idTarea);
 
         objeto.estado = "Vencida";
