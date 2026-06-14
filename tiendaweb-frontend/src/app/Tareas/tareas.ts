@@ -5,7 +5,6 @@ import { CommonModule} from '@angular/common';
 import { Router } from '@angular/router'
 import { Materia } from '../Materias/materia'
 import{ SubTareasVer} from '../SubTareas/subTareasVer';
-// import {Subtarea} from '../SubTareas/Subtarea';
 
 @Component({
   selector: 'app-tareas',
@@ -13,6 +12,8 @@ import{ SubTareasVer} from '../SubTareas/subTareasVer';
   templateUrl: './tareas.html',
 })
 export class Tareas {
+
+  private router = inject(Router)
   private api = inject(ApiClient);
   private url = 'http://localhost:5056/GestionTareas';
 
@@ -37,16 +38,9 @@ export class Tareas {
         })
 
         this.api.get<Tarea[]>(this.url +'/traertareaspasadas').subscribe({
-          next: data =>{ this.tareasDesfasadas = data
-
-
-          } ,
-
+          next: data =>{ this.tareasDesfasadas = data},
           error: error => console.error('Error al obtener tareas pasadas', error)
         })
-
-
-
       }
     });
   }
@@ -57,9 +51,6 @@ export class Tareas {
       error: error => console.error( 'Error al eliminar tarea', error)
     });
   }
-
-  private router = inject(Router)
-
   editar(tarea: Tarea) {
     this.router.navigate(['/tarea'], { state: { tarea } });
   }
@@ -74,9 +65,6 @@ export class Tareas {
       error: error => console.error('Error al completar la  tarea', error)
     })
   }
-
-
-
   VerificarTareasTiempo():void{
 
     var fechahoy =  Date.now();
@@ -95,14 +83,12 @@ export class Tareas {
 }
 
 marcarvencidad(tareaid : number){
-
     this.api.put(`${this.url}/MarcarVencidad?tareaid=${tareaid}` , {} ).subscribe({
       error: error => console.error('Error al marcarVencidad', error)
     })
 }
 
 
-  // protected readonly SubTareasVer = SubTareasVer;
 }
 
 export interface Tarea {

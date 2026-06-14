@@ -1,12 +1,11 @@
 import { Routes } from '@angular/router';
 import { Tareas} from './Tareas/tareas';
-import { TareaEdicion } from './Tareas/tarea';
+import { TareaEdicion } from './Tareas/tarea-edicion';
 import { ManejoLogin } from './Login/manejo-login';
 import {CrearCuenta} from './CrearCuenta/crearcuenta';
 import {ListaMaterias } from './Materias/lista-materias';
 import {MateriaEdicion} from'./Materias/materia-edicion'
 import { Calendario } from './Calendario/calendario';
-// import {Subtarea} from './SubTareas/Subtarea';
 import {SubTareasVer} from './SubTareas/subTareasVer';
 import {Mostrarmatriz} from './Matriz/mostrarmatriz';
 import {CrearSubtarea} from './SubTareas/crearsubtarea';

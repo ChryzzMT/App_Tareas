@@ -26,14 +26,12 @@ export class MateriaEdicion {
 
   private router = inject(Router);
   private route = inject(ActivatedRoute);
-
-  esEdicion = false;
-
+  esEdicion:boolean = false;
   ngOnInit() {
     const state = history.state;
-    if (state && state['materia']) {//aqui recibe la materia que se envio de lista-materias.editar
+    if (state && state['materia']) {
       this.materia = state['materia'];
-      this.esEdicion = true;
+      this.esEdicion=true;
     }
   }
 

@@ -1,7 +1,7 @@
 import { Component, inject } from '@angular/core';
 import { usuario } from '../Login/Usuario';
 import { FormsModule } from '@angular/forms';
-import { HttpClient } from '@angular/common/http'; // 🎯 Importamos el cliente nativo
+import { HttpClient } from '@angular/common/http';
 import { RouterLink, Router } from '@angular/router';
 
 @Component({

@@ -78,9 +78,5 @@ export class ManejoLogin {
       }
     });
   }
-
-
-
-  // protected readonly email = email;
   protected readonly RouterLink = RouterLink;
 }

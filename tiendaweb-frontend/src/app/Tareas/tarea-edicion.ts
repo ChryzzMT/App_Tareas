@@ -10,9 +10,10 @@ import {MateriaEdicion} from '../Materias/materia-edicion';
 @Component({
   selector: 'app-tarea',
   imports: [RouterLink, FormsModule],
-  templateUrl: './tarea.html'
+  templateUrl: './tarea-edicion.html'
 })
 export class TareaEdicion {
+
   private api = inject(ApiClient);
   private router = inject(Router);
   private url = 'http://localhost:5056/GestionTareas';
@@ -30,9 +31,7 @@ export class TareaEdicion {
 
   guardar() {
     this.api.post(this.url + '/Crear-Tarea', this.tarea).subscribe({
-      next: () => {
-        // this.tarea = {idTarea: 0, titulo: '', descripcion: '', fechaEntrega: '', pesoTarea: 0, estado: '', idMateria: 0};
-        this.router.navigate(['/tareas']);
+      next: () => { this.router.navigate(['/tareas']);
       },
       error: error => console.error('Error al guardar la tarea', error)
     });
@@ -45,16 +44,15 @@ export class TareaEdicion {
     });
   }
 
-  esEdicion = false;
 
   materias: {idMateria: number, nombreMateria: string}[] = [];
-
+esEdicion:boolean = false;
   ngOnInit() {
     const usuarioId = localStorage.getItem('usuarioId');
     const state = history.state;
     if (state && state['tarea']) {
       this.tarea = state['tarea'];
-      this.esEdicion = true;
+      this.esEdicion=true;
     }
 
     this.api.put('http://localhost:5056/GestionMaterias/SetUsuario?userid=' + usuarioId, {}).subscribe({

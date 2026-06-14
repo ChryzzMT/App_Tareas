@@ -16,7 +16,7 @@ public class GestionSubtareaController : Controller
     }
 
     [HttpPut("SetUser")]
-    public void PutUser(int id)
+    public void PutUser([FromBody]int id)
     {
         _gestionSubtareas.SetUser(id);
     }

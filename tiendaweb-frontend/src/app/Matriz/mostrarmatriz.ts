@@ -14,12 +14,12 @@ export class Mostrarmatriz {
 
   private api = inject(ApiClient);
   private url = "http://localhost:5056/GestionImpactoEsfuerzo";
+  private router = inject(Router);
 
   ListaDescartar : Tarea [] = []
   ListaOportunidades : Tarea [] = []
   ListaGananciasRapidas : Tarea [] = []
   ListaGananciasMinimas : Tarea [] = []
-  private router = inject(Router);
 
   ngOnInit() {
     const userid = localStorage.getItem('usuarioId');
@@ -44,31 +44,29 @@ CargarEsfuerzoImpacto(){
       error:error => console.error(error)
     });
 }
-
-
   CargarListaDescartar(){
-    this.api.get<Tarea[]>(`${this.url}/tareas-descartar`).subscribe({
+    this.api.get<Tarea[]>(this.url+'/tareas-descartar').subscribe({
       next : data => this.ListaDescartar = data,
       error: error => console.log("Error al cargar", error)
     }) ;
   }
 
   CargarListaGananciasRapidas() {
-    this.api.get<Tarea[]>(`${this.url}/tareas-gananciarapida`).subscribe({
+    this.api.get<Tarea[]>(this.url+'/tareas-gananciarapida').subscribe({
       next : data => this.ListaGananciasRapidas = data,
       error: error => console.log("Error al cargar", error)
     }) ;
   }
 
   CargarListaGanananciasmenores () {
-    this.api.get<Tarea[]>(`${this.url}/tareas-menorgan`).subscribe({
+    this.api.get<Tarea[]>(this.url+'/tareas-menorgan').subscribe({
       next : data => this.ListaGananciasMinimas = data,
       error: error => console.log("Error al cargar", error)
     }) ;
   }
 
   CargarListaOportunidades () {
-    this.api.get<Tarea[]>(`${this.url}/tareas-oportunidades`).subscribe({
+    this.api.get<Tarea[]>(this.url+'/tareas-oportunidades').subscribe({
       next : data => this.ListaOportunidades = data,
       error: error => console.log("Error al cargar", error)
     }) ;

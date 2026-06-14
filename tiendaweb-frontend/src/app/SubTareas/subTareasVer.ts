@@ -3,7 +3,6 @@ import { ApiClient } from '../core/http/api-client';
 import { RouterLink } from '@angular/router';
 import { FormsModule } from '@angular/forms';
 import { Router } from '@angular/router';
-// import { Subtarea } from './Subtarea';
 import {Tarea} from '../Tareas/tareas';
 import {Materia} from '../Materias/materia';
 
@@ -13,11 +12,6 @@ import {Materia} from '../Materias/materia';
   templateUrl: './subTareasVer.html',
 })
 export class SubTareasVer {
-  // subtarea: Subtarea ={
-  //   idsubtarea: 0,
-  //   descripcion: '',
-  //   idtarea:0
-  // }
   private api = inject(ApiClient);
   private router = inject(Router);
   private url = 'http://localhost:5056/GestionSubtarea';
@@ -40,23 +34,16 @@ export class SubTareasVer {
     if (state && state['tarea']) {
       this.tarea = state['tarea'];
     }
+    const usuarioId = Number(localStorage.getItem('usuarioId'));
 
-    const usuarioId = localStorage.getItem('usuarioId');
-
-
-    this.api.put(`${this.url}/SetUser?id=${usuarioId}`, {}).subscribe({
-      next: () => {
-        console.log('Usuario configurado con exito');
-
-        this.cargarsubtareas();
-      },
+    this.api.put(this.url+'/SetUser',usuarioId).subscribe({
+      next: () => {this.cargarsubtareas()},
       error: error => console.error('Error al establecer usuario:', error)
     });
   }
 
   cargarsubtareas() {
-    // Concatenamos '?idtarea=' antes del ID para que coincida con el backend
-    this.api.get<Subtarea1[]>(`${this.url}/ListarSubtareas?idtarea=${this.tarea.idTarea}`).subscribe({
+    this.api.get<Subtarea1[]>(this.url+'/ListarSubtareas'+'?idtarea='+this.tarea.idTarea).subscribe({
       next: data => {
         this.subtareas = data;
         console.log('Subtareas cargadas:', data);
@@ -70,7 +57,7 @@ export class SubTareasVer {
   }
 
   eliminarsubtarea(idsubtarea: number) {
-    this.api.delete(`${this.url}/DeleteSubtarea?id=${idsubtarea}`).subscribe({
+    this.api.delete(this.url+'/DeleteListaSubtareas'+'?='+idsubtarea).subscribe({
       next: () => this.subtareas = this.subtareas.filter(s => s.idsubtarea !== idsubtarea),
       error: error => console.error('Error al eliminar materia', error)
     });
