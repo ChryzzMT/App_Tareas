@@ -28,7 +28,6 @@ export class Tareas {
       next: () => {
         this.api.get<Tarea[]>(this.url + '/Listar-Tareas').subscribe({
           next: data =>{ this.tareas = data
-            this.VerificarTareasTiempo();
           },
           error: error => console.error('Error al obtener tareas', error)
         });
@@ -38,7 +37,7 @@ export class Tareas {
         })
 
         this.api.get<Tarea[]>(this.url +'/traertareaspasadas').subscribe({
-          next: data =>{ this.tareasDesfasadas = data},
+          next: data =>{ this.tareasDesfasadas = data },
           error: error => console.error('Error al obtener tareas pasadas', error)
         })
       }
@@ -65,30 +64,6 @@ export class Tareas {
       error: error => console.error('Error al completar la  tarea', error)
     })
   }
-  VerificarTareasTiempo():void{
-
-    var fechahoy =  Date.now();
-
-    for(let i =0;i<this.tareas.length; i++){
-      var objeto = this.tareas[i];
-      var fechaentregaobj = new Date(objeto.fechaEntrega).getTime();
-      if(fechaentregaobj < fechahoy && objeto.estado.toLowerCase() !="completada"){
-        this.marcarvencidad(objeto.idTarea);
-
-        objeto.estado = "Vencida";
-        this.tareasDesfasadas.push(objeto);
-        this.tareas.splice(i,1);
-      }
-    }
-}
-
-marcarvencidad(tareaid : number){
-    this.api.put(this.url+'/MarcarVencidad?tareaid='+tareaid , {} ).subscribe({
-      error: error => console.error('Error al marcarVencidad', error)
-    })
-}
-
-
 }
 
 export interface Tarea {

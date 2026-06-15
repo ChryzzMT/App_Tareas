@@ -33,7 +33,7 @@
                   <button class="btn btn-outline-success btn-sm" (click)="verSubtareas(tarea)" routerLink="/subtareas" >VerSubtarea </button>
                   <button class="btn btn-outline-primary btn-sm" (click)="editar(tarea)">Editar</button>
                   <button class="btn btn-outline-danger btn-sm" (click)="eliminar(tarea.titulo)">Eliminar</button>
-                  <button class="btn btn-outline-warning"  (click)="MarcarCompletada(tarea.idTarea)" >  Completada? </button>
+                  <button class="btn btn-outline-warning"  (click)="MarcarCompletada(tarea.idTarea)" >  Completado </button>
                 </div>
               </td>
             </tr>
@@ -78,7 +78,7 @@
       <th scope = "col"> Materia </th>
     </tr>
     </thead>
-    <tbody class="table-group-divider" style="border-color: lawngreen">
+    <tbody class="table-group-divider" style="border-color: lightblue">
 
     @for(com of tareascompletadas ; track com.idTarea){
       <tr>
@@ -93,7 +93,7 @@
             <button class="btn btn-outline-success btn-sm" (click)="verSubtareas(com)" routerLink="/subtareas" >VerSubtarea </button>
             <button class="btn btn-outline-primary btn-sm" (click)="editar(com)">Editar</button>
             <button class="btn btn-outline-danger btn-sm" (click)="eliminar(com.titulo)">Eliminar</button>
-            <button class="btn btn-outline-warning"  (click)="MarcarCompletada(com.idTarea)" >  No se ha Completado? </button>
+            <button class="btn btn-outline-warning"  (click)="MarcarCompletada(com.idTarea)" >  Desmarcar </button>
           </div>
         </td>
       </tr>

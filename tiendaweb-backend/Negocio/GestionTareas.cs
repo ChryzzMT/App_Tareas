@@ -22,9 +22,10 @@ public class GestionTareas
 
     public List<Tarea> ListarTareas()
     {
-        return _db.Tareas.Include(t => t.Materia).Where(p => p.idUsuario == _idenuser && p.Estado.ToLower() != "completada" &&
+        var tareas= _db.Tareas.Include(t => t.Materia).Where(p => p.idUsuario == _idenuser && p.Estado.ToLower() != "completada" &&
                                                              p.Estado.ToLower() != "vencida" && 
                                                              p.FechaEntrega > DateTime.Now ).ToList();
+        return tareas.OrderBy(t => t.FechaEntrega).ToList();
     }
 
     public void AgregarTarea(Tarea tarea)
@@ -85,13 +86,18 @@ public class GestionTareas
         var tareaspasadas = _db.Tareas.Where(t => t.idUsuario == _idenuser 
                                                   && (t.Estado.ToLower() == "vencida" || (t.Estado.ToLower() == "pendiente" && t.FechaEntrega < DateTime.Now)));
 
+        foreach (var tarea in tareaspasadas)
+        {
+            tarea.Estado = "Vencida";
+        }
+        _db.SaveChanges();
         return tareaspasadas.OrderByDescending(t => t.FechaEntrega)
             .ToList();
     }
 
     public List<Tarea> MostrarPorPrioridad()
     {
-        var tareas = _db.Tareas.Where(t => t.idUsuario == _idenuser);
+        var tareas = _db.Tareas.Where(t => t.idUsuario == _idenuser && t.Estado!="vencida");
         return tareas.OrderBy(t => t.FechaEntrega).ToList();
     }
          public  void MarcarCompletado(int idtarea)
