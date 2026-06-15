@@ -34,13 +34,7 @@ public class GestionSubtareaController : Controller
         _gestionSubtareas.EliminarSubtarea(id);
         
     }
-
-    [HttpDelete("DeleteListaSubtareas")]
-    public void DeleteListaSubtareas(List<int> ids)
-    {
-        _gestionSubtareas.EliminarSubtarea(ids);
-    }
-
+    
     [HttpPut("ActualizarDescripcion")]
     public void ActualizarDescripcion(int id, string descripcion)
     {

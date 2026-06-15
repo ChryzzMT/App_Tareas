@@ -33,20 +33,7 @@ public class GestionSubtareas
         _db.Subtareas.Update(indexsub);
         _db.SaveChanges();
     }
-
-    public void EliminarSubtarea(List<int> list)
-    {
-        if(list.Count == 0) return;
-
-        var lista = _db.Subtareas.Where(t => t.Tarea.idUsuario == userid && list.Contains(t.idsubtarea) ).ToList();
-        for (int i = 0; i < lista.Count; i++)
-        {
-            _db.Subtareas.Remove(lista[i]);
-        }
-        
-        _db.SaveChanges();
-    }
-
+    
     public void EliminarSubtarea(int idSubtarea)
     {
         var indexsub = _db.Subtareas.Find(idSubtarea);

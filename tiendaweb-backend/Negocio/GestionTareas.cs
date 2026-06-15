@@ -53,47 +53,8 @@ public class GestionTareas
             _db.SaveChanges();
         }
     }
+    
 
-    public void ActualizarTitulo(string antiguoTitulo, string nuevoTitulo)
-    {
-        var tarea = _db.Tareas.FirstOrDefault(t => t.Titulo == antiguoTitulo);
-        if (tarea != null)
-        {
-            tarea.Titulo = nuevoTitulo;
-            _db.SaveChanges();
-        }
-    }
-
-    public void ActualizarDescripcion(int idTar, string nuevaDescripcion)
-    {
-        var tarea = _db.Tareas.FirstOrDefault(t => t.IdTarea == idTar);
-        if (tarea != null)
-        {
-            tarea.Descripcion = nuevaDescripcion;
-            _db.SaveChanges();
-        }
-    }
-
-    public void ActualizarPesoTarea(int idTar, int nuevoPeso)
-    {
-        var tarea = _db.Tareas.FirstOrDefault(t => t.IdTarea== idTar);
-        if (tarea != null)
-        {
-            tarea.PesoTarea = nuevoPeso;
-            _db.SaveChanges();
-        }
-    }
-
-    public void ActualizarFecha(int idTar, int year, int mes, int dia, int hora, int minuto)
-    {
-        
-        var tarea = _db.Tareas.FirstOrDefault(t => t.IdTarea == idTar);
-        if (tarea != null)
-        {
-            tarea.FechaEntrega = new DateTime(year, mes, dia, hora, minuto,0);
-            _db.SaveChanges();
-        }
-    }
     
     public void ActualizarTodo(Tarea tarea)
     {
@@ -128,43 +89,11 @@ public class GestionTareas
             .ToList();
     }
 
-    public List<Object> MostrarPorPrioridad()
+    public List<Tarea> MostrarPorPrioridad()
     {
-        var tareasporprioridad = 
-            _db.Tareas.Where(p=>p.idUsuario == _idenuser && 
-                                (p.Estado.ToLower() == "pendiente" ||  p.Estado.ToLower() == "enprogreso") &&  p.FechaEntrega > DateTime.Now )
-            .OrderByDescending( t => t.Materia.PrioridadMateria).ThenByDescending(m => m.PesoTarea)
-            .ThenBy(k => k.FechaEntrega)
-            .Select(g => new
-        {
-            Id = g.IdTarea,
-            nombre = g.Titulo,
-            descripcion = g.Descripcion,
-            estado = g.Estado,
-            fechadeentrega = g.FechaEntrega,
-            NombreMateria = g.Materia.NombreMateria,
-            PesoTarea = g.PesoTarea,
-            PesoMateria = g.Materia.PrioridadMateria
-           
-
-
-        });
-
-        return tareasporprioridad.ToList<object>();
+        var tareas = _db.Tareas.Where(t => t.idUsuario == _idenuser);
+        return tareas.OrderBy(t => t.FechaEntrega).ToList();
     }
-
-    
-        public Tarea? Recomendacion()
-        {
-            var recomendacion = _db.Tareas.Where(p => p.idUsuario == _idenuser &&
-                                                      (p.Estado.ToLower() == "pendiente" ||
-                                                       p.Estado.ToLower() == "enprogreso") && p.FechaEntrega > DateTime.Now)
-                .OrderByDescending(t => t.PesoTarea + t.Materia.PrioridadMateria)
-                .ThenBy(k => k.FechaEntrega).FirstOrDefault();
-        
-            return recomendacion;
-        }
-
          public  void MarcarCompletado(int idtarea)
         {
             var  tarea =  _db.Tareas.FirstOrDefault(t => t.IdTarea == idtarea && t.idUsuario == _idenuser)!; 

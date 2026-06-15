@@ -16,21 +16,13 @@ public class GestionUsuarioController : Controller
         _gestionuser = new GestionUsuario(context);
     }
     
-    [HttpDelete("EliminarUsuario")]
-    public void EliminarUsuario( [FromBody] int id)
-    {
-        _gestionuser.EliminarUsuario(id);
-    }
-
     [HttpPost("CrearUsuario")]
     public int CrearUsuario([FromBody] Usuario usuario)
     {
        return _gestionuser.CrearUsuario(usuario);
         
     }
-
     
-
     [HttpGet("VerificarUsuario")]
     public Usuario? Log(string m,string c)
     {

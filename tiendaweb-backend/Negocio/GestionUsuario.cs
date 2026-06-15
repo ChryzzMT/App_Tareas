@@ -20,21 +20,6 @@ public class GestionUsuario
         return usuario.idUsuario;
     }
 
-    public void EliminarUsuario(int d)
-    {
-        var usuario = _db.Usuarios.Find(d);
-
-        if (usuario != null)
-        {
-            _db.Usuarios.Remove(usuario);
-            _db.SaveChanges();
-        }
-
-
-    }
-
-    
-
     public Usuario? Login(string email, string password)
     {
      var usuariolog = _db.Usuarios.FirstOrDefault(e=> e.Email == email && e.Contrasena == password );
