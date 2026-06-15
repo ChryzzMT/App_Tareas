@@ -60,7 +60,7 @@ export class Tareas {
   }
 
   MarcarCompletada( tareaid : number):void {
-    this.api.put(`${this.url}/MarcarCompletado?tareaid=${tareaid}` , {} ).subscribe({
+    this.api.put(this.url+'/MarcarCompletado?tareaid='+ tareaid , {} ).subscribe({
       next : () => this.ngOnInit(),
       error: error => console.error('Error al completar la  tarea', error)
     })
@@ -83,7 +83,7 @@ export class Tareas {
 }
 
 marcarvencidad(tareaid : number){
-    this.api.put(`${this.url}/MarcarVencidad?tareaid=${tareaid}` , {} ).subscribe({
+    this.api.put(this.url+'/MarcarVencidad?tareaid='+tareaid , {} ).subscribe({
       error: error => console.error('Error al marcarVencidad', error)
     })
 }
