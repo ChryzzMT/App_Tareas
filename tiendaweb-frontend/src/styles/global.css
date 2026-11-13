@@ -1,0 +1,105 @@
+:root {
+  --papel: #f3ecdf;
+  --papel-2: #fffaf3;
+  --tinta: #1d2430;
+  --tinta-suave: #4a433b;
+  --linea: #e4d5c3;
+  --acento: #9a3412;
+  --acento-oscuro: #7c2d12;
+  --acento-suave: #f8e6dc;
+  --exito: #145c38;
+  --exito-suave: #e5f4ec;
+  --aviso: #7a4e0d;
+  --aviso-suave: #f8efd8;
+  --info: #1f4e79;
+  --info-suave: #e7f0f8;
+  --peligro: #9d2c2c;
+  --peligro-suave: #fdecec;
+  --sombra: 0 12px 30px rgba(70, 44, 20, 0.08);
+  --radio: 18px;
+  --fuente: "Nunito Sans", "Segoe UI", sans-serif;
+  --fuente-titulo: "Fraunces", "Palatino Linotype", Palatino, serif;
+  --foco: 3px solid #1d2430;
+  color-scheme: light;
+}
+
+* { box-sizing: border-box; }
+
+html { scroll-behavior: smooth; }
+
+body {
+  margin: 0;
+  min-height: 100vh;
+  color: var(--tinta);
+  font-family: var(--fuente);
+  font-size: 1.02rem;
+  line-height: 1.5;
+  background:
+    radial-gradient(900px 420px at 0% -10%, rgba(154, 52, 18, 0.12), transparent 55%),
+    radial-gradient(700px 380px at 100% 0%, rgba(31, 78, 121, 0.1), transparent 50%),
+    var(--papel);
+}
+
+h1, h2, h3, p { margin-top: 0; }
+
+h1, h2, .nombre-sistema {
+  font-family: var(--fuente-titulo);
+  font-weight: 560;
+  letter-spacing: -0.03em;
+  line-height: 1.15;
+}
+
+h1 { font-size: clamp(2rem, 4vw, 2.8rem); margin-bottom: 0.4rem; }
+
+a { color: var(--acento-oscuro); }
+
+a:hover { color: var(--tinta); }
+
+:focus-visible {
+  outline: var(--foco);
+  outline-offset: 3px;
+}
+
+.sr-solo {
+  position: absolute;
+  width: 1px;
+  height: 1px;
+  padding: 0;
+  margin: -1px;
+  overflow: hidden;
+  clip: rect(0, 0, 0, 0);
+  white-space: nowrap;
+  border: 0;
+}
+
+.saltar {
+  position: absolute;
+  left: 1rem;
+  top: -4rem;
+  background: var(--papel-2);
+  color: var(--tinta);
+  padding: 0.6rem 0.9rem;
+  border-radius: 999px;
+  z-index: 20;
+}
+
+.saltar:focus { top: 1rem; }
+
+.app { min-height: 100vh; display: flex; flex-direction: column; }
+
+.contenido {
+  width: min(1120px, calc(100% - 2rem));
+  margin: 0 auto;
+  padding: 1.6rem 0 3rem;
+  flex: 1;
+}
+
+.intro { color: var(--tinta-suave); max-width: 68ch; }
+
+@media (prefers-reduced-motion: reduce) {
+  html { scroll-behavior: auto; }
+  *, *::before, *::after {
+    animation: none !important;
+    transition: none !important;
+  }
+}

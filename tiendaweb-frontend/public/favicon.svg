@@ -1,0 +1,7 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 32 32" role="img" aria-label="Cuatro prioridades">
+  <rect width="32" height="32" rx="7" fill="#1d2430"/>
+  <rect x="6" y="6" width="8" height="8" transform="rotate(45 10 10)" fill="#f0b429"/>
+  <path d="M22 6 L27 15 H17 Z" fill="#7eb6e0"/>
+  <rect x="7" y="18" width="8" height="8" fill="#e0a15a"/>
+  <circle cx="23" cy="23" r="4.2" fill="none" stroke="#f6efe4" stroke-width="1.7" stroke-dasharray="2 1.5"/>
+</svg>
