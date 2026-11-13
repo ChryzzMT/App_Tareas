@@ -1,25 +1,59 @@
 :root {
-  --papel: #f3ecdf;
-  --papel-2: #fffaf3;
-  --tinta: #1d2430;
-  --tinta-suave: #4a433b;
-  --linea: #e4d5c3;
-  --acento: #9a3412;
-  --acento-oscuro: #7c2d12;
-  --acento-suave: #f8e6dc;
-  --exito: #145c38;
-  --exito-suave: #e5f4ec;
-  --aviso: #7a4e0d;
-  --aviso-suave: #f8efd8;
-  --info: #1f4e79;
-  --info-suave: #e7f0f8;
-  --peligro: #9d2c2c;
-  --peligro-suave: #fdecec;
-  --sombra: 0 12px 30px rgba(70, 44, 20, 0.08);
+  /* Paleta: morados de la identidad, magenta profundo y ámbar. Sin azul. */
+  --morado: #7f00b2;
+  --morado-medio: #8e22bb;
+  --morado-claro: #ab49cc;
+  --morado-oscuro: #5c0084;
+  --magenta: #c2185b;
+  --magenta-oscuro: #8e1244;
+  --magenta-suave: #fde8f1;
+  --ambar: #f2a93b;
+  --ambar-oscuro: #7a4e0d;
+  --ambar-suave: #fff6e4;
+  --lavanda: #f3e8fb;
+  --lavanda-profunda: #e7d4f6;
+
+  --papel: var(--lavanda);
+  --papel-2: #fffcff;
+  --tinta: #2a1038;
+  --tinta-suave: #4e3260;
+  --linea: #e3d0ef;
+  --acento: var(--morado);
+  --acento-oscuro: var(--morado-oscuro);
+  --acento-suave: var(--lavanda);
+  --texto-sobre-acento: #ffffff;
+  --texto-encabezado: #ffffff;
+  --texto-encabezado-suave: #f6e9ff;
+
+  --exito: #14613a;
+  --exito-suave: #e5f6ec;
+  --aviso: var(--ambar-oscuro);
+  --aviso-suave: var(--ambar-suave);
+  --info: var(--morado);
+  --info-suave: var(--lavanda);
+  --peligro: var(--magenta);
+  --peligro-suave: var(--magenta-suave);
+  --peligro-borde: #e7a3bf;
+
+  --cuadrante-oportunidad: #c48412;
+  --cuadrante-oportunidad-texto: #6b4508;
+  --cuadrante-oportunidad-fondo: #fff6e4;
+  --cuadrante-rapida: var(--magenta);
+  --cuadrante-rapida-texto: var(--magenta-oscuro);
+  --cuadrante-rapida-fondo: var(--magenta-suave);
+  --cuadrante-menor: var(--morado-medio);
+  --cuadrante-menor-texto: var(--morado-oscuro);
+  --cuadrante-menor-fondo: #f6e9fb;
+  --cuadrante-minima: var(--morado-claro);
+  --cuadrante-minima-texto: #4a1468;
+  --cuadrante-minima-fondo: var(--lavanda);
+
+  --sombra: 0 12px 30px rgba(127, 0, 178, 0.1);
   --radio: 18px;
   --fuente: "Nunito Sans", "Segoe UI", sans-serif;
   --fuente-titulo: "Fraunces", "Palatino Linotype", Palatino, serif;
-  --foco: 3px solid #1d2430;
+  --foco: 3px solid var(--morado);
+  --foco-claro: 3px solid var(--ambar);
   color-scheme: light;
 }
 
@@ -35,8 +69,8 @@ body {
   font-size: 1.02rem;
   line-height: 1.5;
   background:
-    radial-gradient(900px 420px at 0% -10%, rgba(154, 52, 18, 0.12), transparent 55%),
-    radial-gradient(700px 380px at 100% 0%, rgba(31, 78, 121, 0.1), transparent 50%),
+    radial-gradient(900px 420px at 0% -10%, rgba(127, 0, 178, 0.16), transparent 55%),
+    radial-gradient(700px 380px at 100% 0%, rgba(194, 24, 91, 0.08), transparent 50%),
     var(--papel);
 }
 
@@ -58,6 +92,10 @@ a:hover { color: var(--tinta); }
 :focus-visible {
   outline: var(--foco);
   outline-offset: 3px;
+}
+
+.encabezado :focus-visible {
+  outline: var(--foco-claro);
 }
 
 .sr-solo {

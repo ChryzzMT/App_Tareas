@@ -21,25 +21,34 @@ Esa matriz es la regla de priorización y se conservó. Los nombres de carpeta `
 
 Hace falta Node.js 22 y el SDK de .NET 10.
 
-### Backend
+### Backend y SQL Server
 
-En la red de la cátedra, la API usa SQL Server (la cadena sigue en `tiendaweb-backend/appsettings.json`):
+La cadena ya está en `tiendaweb-backend/appsettings.json` y apunta a SQL Server:
+
+```text
+Server=10.21.207.16,1433;Database=BaseAppTareas;User Id=sa;Password=123;TrustServerCertificate=True
+```
+
+Hay que estar en la red de ese servidor. Desde `tiendaweb-backend`:
 
 ```bash
-cd tiendaweb-backend
+dotnet tool restore
+dotnet ef database update
 dotnet run
 ```
 
+`dotnet tool restore` instala `dotnet ef` local (versión 10.0.8, declarado en `dotnet-tools.json`). `database update` aplica la migración `Inicial` de `Migrations/` y crea las tablas Usuario, Materia, Tarea, Subtarea y Notificacion. La migración está generada para el proveedor SQL Server.
+
 La API queda en `http://localhost:5056`.
 
-Fuera de esa red el servidor no responde. Para probar la misma lógica en un archivo local:
+Si ese servidor no está al alcance, la misma lógica puede correr con un archivo local. Ese modo no usa la migración: crea el esquema con `EnsureCreated`.
 
 ```bash
 cd tiendaweb-backend
 USE_SQLITE=1 dotnet run
 ```
 
-Eso crea `priorizacion-local.db` junto al proyecto. No cambia los controladores ni las reglas. Sin la variable, el programa sigue intentando SQL Server.
+Sin `USE_SQLITE=1`, el programa usa la cadena de SQL Server.
 
 ### Frontend
 
@@ -98,11 +107,11 @@ Al marcar como hecha una tarea completada o vencida, el servidor la devuelve a P
 
 ## Decisiones
 
-- **JavaScript, no TypeScript.** El gestor usado como referencia (`gestor-tareas-cato`) es React + Vite en JSX. Este proyecto sigue ese stack. Los estilos son CSS, no Tailwind: la consigna pedía CSS y la identidad visual es propia (papel, tinta y terracota, no la plantilla gris y azul de la referencia).
+- **JavaScript, no TypeScript.** El gestor usado como referencia (`gestor-tareas-cato`) es React + Vite en JSX. Este proyecto sigue ese stack. Los estilos son CSS, no Tailwind. La paleta vive en las variables de `styles/global.css`: morados `#7f00b2`, `#8e22bb` y `#ab49cc`, magenta `#c2185b` y ámbar `#f2a93b` sobre lavanda `#f3e8fb`. No usa azul.
 - **De la referencia se tomó la estructura de pantalla**, no el dominio. Encabezado con el nombre del sistema, formulario arriba, tarjetas, estado vacío y pie. No hay docente ni tareas de ejemplo fijas: los datos salen de la API.
 - **React Router sí hace falta.** Login, registro, tareas, matriz, calendario y materias son pantallas distintas.
 - **CORS.** `Program.cs` acepta el puerto 4200 de Angular y los puertos 5173 y 4173 de Vite. El resto del backend no se reescribió.
-- **SQLite opcional.** Solo con `USE_SQLITE=1`, para poder ejecutar fuera de la red de la cátedra. La cadena de SQL Server queda como camino por defecto.
+- **SQLite opcional.** Solo con `USE_SQLITE=1`, y crea el archivo con `EnsureCreated`. La migración de `Migrations/` es exclusivamente para SQL Server.
 - **No hay un arrastre entre cuadrantes.** El endpoint `CambiarCuadrantes` existe, pero la pantalla Angular nunca lo usaba y el movimiento no se guarda: al recalcular, la tarea vuelve a su grupo. Para cambiar de grupo se edita el peso o la prioridad de la materia.
 - **Subtareas.** El cliente Angular pedía `DeleteListaSubtareas`, una ruta que el controlador no tiene. El cliente React llama a `DeleteSubtarea`, que sí existe. También se puede corregir el texto, porque `ActualizarDescripcion` ya estaba en la API.
 - **Vencidas primero.** Al cargar, el cliente pide antes `traertareaspasadas`. Ese endpoint es el que marca como vencidas las pendientes con fecha pasada. Después pide el resto, para no mostrarlas todavía como pendientes.
@@ -120,7 +129,7 @@ Al marcar como hecha una tarea completada o vencida, el servidor la devuelve a P
 | 5. Prevención de errores | `logic/validacion.js` impide guardar una tarea o una materia incompletas. `components/DialogoConfirmacion.jsx` pide confirmación antes de eliminar. La opción Vencida no se puede elegir: la pone el sistema. |
 | 6. Reconocimiento antes que recuerdo | `components/TarjetaTarea.jsx` muestra título, descripción, materia, prioridad de la materia, peso, fecha, estado y cuadrante. |
 | 7. Flexibilidad | `components/BarraFiltros.jsx` busca, filtra y ordena. Pulsar una cifra de `components/ResumenEstadisticas.jsx` aplica ese filtro. `hooks/useAtajos.js`: `/` busca, `N` va al título, Escape cierra. |
-| 8. Estética y jerarquía | Poco ruido, una acción primaria terracota y el borde de la tarjeta distinto según el cuadrante. Lo urgente se lee por la forma y la palabra, no solo por el color. |
+| 8. Estética y jerarquía | Poco ruido, acción primaria morada y borde de tarjeta distinto según el cuadrante. Oportunidades es ámbar y rombo, ganancia rápida es magenta y triángulo, menor ganancia es morado y cuadrado, descartar es lavanda con borde punteado y círculo. El texto oscuro va sobre fondos claros para conservar contraste. |
 | 9. Errores que dicen cómo seguir | Cada campo inválido explica la corrección en `logic/validacion.js`. Si el servidor no responde, `services/apiClient.js` dice que hay que abrirlo en el puerto 5056. El banner de las páginas tiene «Reintentar». |
 | 10. Ayuda breve | Los párrafos `.ayuda` de los formularios y el desplegable «¿Cómo se decide qué va primero?». El cuadrante también tiene un `title` con su explicación. |
 
