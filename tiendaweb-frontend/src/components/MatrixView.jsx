@@ -3,6 +3,26 @@ import { apiEnviar, apiGet, comoLista, mensajeDeError } from '../data/api'
 import Alert from './Alert'
 import Quadrant from './Quadrant'
 
+// Una clasificación mete cada tarea en un solo cuadrante, una vez.
+// Esas listas son compartidas en el servidor: si dos cálculos se pisan,
+// la misma tarea queda repetida dentro de la misma lista.
+// En desarrollo el efecto se dispara dos veces y eso alcanza para pisarlos.
+function sinRepetidos(tareas) {
+  const yaVistas = []
+  const resultado = []
+
+  for (let i = 0; i < tareas.length; i++) {
+    const id = tareas[i].idTarea
+
+    if (yaVistas.indexOf(id) === -1) {
+      yaVistas.push(id)
+      resultado.push(tareas[i])
+    }
+  }
+
+  return resultado
+}
+
 function MatrixView({ user }) {
   const [oportunidades, setOportunidades] = useState([])
   const [gananciaRapida, setGananciaRapida] = useState([])
@@ -31,10 +51,10 @@ function MatrixView({ user }) {
           return
         }
 
-        setOportunidades(comoLista(listaOportunidades))
-        setGananciaRapida(comoLista(listaRapida))
-        setMenorGanancia(comoLista(listaMenor))
-        setDescartar(comoLista(listaDescartar))
+        setOportunidades(sinRepetidos(comoLista(listaOportunidades)))
+        setGananciaRapida(sinRepetidos(comoLista(listaRapida)))
+        setMenorGanancia(sinRepetidos(comoLista(listaMenor)))
+        setDescartar(sinRepetidos(comoLista(listaDescartar)))
       } catch (err) {
         if (activo) {
           setError(mensajeDeError(err))
