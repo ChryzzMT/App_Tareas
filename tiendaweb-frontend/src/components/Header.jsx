@@ -8,7 +8,7 @@ function Header({ user }) {
 
         <div>
           <h1 className="text-3xl font-bold text-white">
-            Gestor de tareas
+            Priorizador de tareas
           </h1>
 
           <p className="text-gray-400 mt-1">
