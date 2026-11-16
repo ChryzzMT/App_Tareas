@@ -8,7 +8,7 @@ function EmptyState({ titulo, texto }) {
       <p className="text-gray-400 mt-2">
         {texto}
       </p>
-    </div>
+    </div> 
   )
 }
 
